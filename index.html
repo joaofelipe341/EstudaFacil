@@ -1,0 +1,2194 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+``````html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstudaFácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>📚 EstudaFácil</h2>
+      <button data-page="inicio">🏠 Início</button>
+      <button data-page="materias">📚 Matérias</button>
+      <button data-page="calculadora">🧮 Calculadora</button>
+      <button data-page="duvidas">💡 Tirar dúvidas</button>
+      <button data-page="progresso">📊 Progresso</button>
+      <button data-page="perfil">👤 Perfil</button>
+      <button id="logoutBtn">🚪 Voltar ao início</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="inicio" class="page active">
+        <h1>Olá! 👋</h1>
+        <h2>Bem-vindo ao EstudaFácil!</h2>
+        <p>Aprender pode ser mais simples.</p>
+        <button data-page="materias">Começar a estudar</button>
+      </section>
+
+      <section id="materias" class="page">
+        <h1>📚 Matérias escolares</h1>
+        <p>Escolha uma matéria:</p>
+        <div id="subjectList">
+          <button data-subject="Matemática">Matemática</button>
+          <button data-subject="Português">Português</button>
+          <button data-subject="Ciências">Ciências</button>
+          <button data-subject="Geografia">Geografia</button>
+          <button data-subject="História">História</button>
+          <button data-subject="Inglês">Inglês</button>
+          <button data-subject="Física">Física</button>
+          <button data-subject="Química">Química</button>
+          <button data-subject="Biologia">Biologia</button>
+          <button data-subject="Filosofia">Filosofia</button>
+          <button data-subject="Sociologia">Sociologia</button>
+        </div>
+        <div id="subjectContent" hidden>
+          <h2 id="subjectTitle"></h2>
+          <p id="subjectDescription"></p>
+          <button data-page="duvidas">Tirar uma dúvida</button>
+          <button data-page="materias">Voltar às matérias</button>
+        </div>
+      </section>
+
+      <section id="calculadora" class="page">
+        <h1>🧮 Calculadora</h1>
+        <input id="display" type="text" placeholder="Ex.: 5+5">
+        <div class="calculator-buttons">
+          <button data-calc="7">7</button>
+          <button data-calc="8">8</button>
+          <button data-calc="9">9</button>
+          <button data-calc="/">÷</button>
+          <button data-calc="4">4</button>
+          <button data-calc="5">5</button>
+          <button data-calc="6">6</button>
+          <button data-calc="*">×</button>
+          <button data-calc="1">1</button>
+          <button data-calc="2">2</button>
+          <button data-calc="3">3</button>
+          <button data-calc="-">−</button>
+          <button data-calc="0">0</button>
+          <button data-calc=".">.</button>
+          <button id="clearBtn">C</button>
+          <button data-calc="+">+</button>
+          <button id="equalsBtn">=</button>
+        </div>
+        <p id="calcResult"></p>
+      </section>
+
+      <section id="duvidas" class="page">
+        <h1>💡 Tirar dúvidas</h1>
+        <form id="doubtForm">
+          <label for="doubtSubject">Matéria:</label>
+          <select id="doubtSubject" required>
+            <option value="">Escolha uma matéria</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+          <label for="doubtInput">Escreva sua pergunta:</label>
+          <textarea id="doubtInput" required placeholder="Digite sua dúvida aqui"></textarea>
+          <button type="submit">Pesquisar dúvida</button>
+        </form>
+        <div id="doubtResult"></div>
+      </section>
+
+      <section id="progresso" class="page">
+        <h1>📊 Meu progresso</h1>
+        <p>Matérias visitadas: <span id="visitedCount">0</span></p>
+        <p>Perguntas pesquisadas: <span id="questionsCount">0</span></p>
+        <p>Contas resolvidas: <span id="calculationsCount">0</span></p>
+      </section>
+
+      <section id="perfil" class="page">
+        <h1>👤 Meu perfil</h1>
+        <form id="profileForm">
+          <label for="profileName">Seu nome:</label>
+          <input id="profileName" type="text" placeholder="Digite seu nome">
+          <button type="submit">Salvar nome</button>
+        </form>
+        <p id="profileMessage"></p>
+      </section>
+
+      <footer>
+        <p>EstudaFácil © 2026</p>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+```
