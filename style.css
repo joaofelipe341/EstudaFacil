@@ -1,70 +1,83 @@
-```css
 * {
   box-sizing: border-box;
 }
 
+:root {
+  --roxo: #6a5acd;
+  --roxo-escuro: #4b369f;
+  --lilas: #f2edff;
+  --texto: #302747;
+  --branco: #ffffff;
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
+  padding: 18px;
+  font-family: Arial, Helvetica, sans-serif;
   background: linear-gradient(135deg, #6a5acd, #8a2be2);
-  color: #29213d;
-  padding: 20px;
+  color: var(--texto);
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
-.app {
+.topo {
   max-width: 1000px;
   margin: 0 auto;
-  background: #ffffff;
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-}
-
-header {
-  padding: 28px 20px;
+  padding: 28px 18px;
   text-align: center;
-  color: white;
-  background: linear-gradient(135deg, #6a5acd, #8a2be2);
+  color: var(--branco);
 }
 
-header h1 {
-  margin: 0 0 10px;
-  font-size: 32px;
-}
-
-header p {
+.topo h1 {
   margin: 0;
+  font-size: clamp(28px, 5vw, 40px);
 }
 
-nav {
+.topo p {
+  margin-bottom: 0;
+}
+
+.menu {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 14px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  padding: 18px;
-  background: #f5f1ff;
+  background: var(--branco);
+  border-radius: 18px 18px 0 0;
 }
 
 button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: #6a5acd;
-  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 15px;
+  background: var(--roxo);
+  color: var(--branco);
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s;
 }
 
 button:hover {
-  background: #4f3db3;
-  transform: translateY(-1px);
+  background: var(--roxo-escuro);
 }
 
-main {
-  padding: 25px;
-  min-height: 330px;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #ffcc66;
+  outline-offset: 3px;
+}
+
+.conteudo {
+  max-width: 1000px;
+  min-height: 400px;
+  margin: 0 auto;
+  padding: 28px;
+  background: var(--branco);
 }
 
 .pagina {
@@ -75,46 +88,97 @@ main {
   display: block;
 }
 
-h2 {
-  color: #5b3cc4;
+h2,
+h3 {
+  color: var(--roxo-escuro);
+  line-height: 1.3;
 }
 
-.grade {
+.cartoes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 10px;
-  margin: 18px 0;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 12px;
+  margin: 22px 0;
 }
 
-input {
-  width: 100%;
-  max-width: 420px;
+.cartoes button {
+  min-height: 55px;
+}
+
+.painel {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--lilas);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+label {
   display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+  margin: 8px 0 16px;
   padding: 13px;
-  margin: 12px 0;
-  border: 2px solid #ddd5ff;
+  border: 1px solid #c9bdf2;
   border-radius: 10px;
-  font-size: 16px;
+  font: inherit;
+  color: var(--texto);
+  background: var(--branco);
 }
 
-#visor {
-  max-width: 100%;
-  text-align: right;
-  font-size: 24px;
+textarea {
+  resize: vertical;
 }
 
-#detalheMateria {
-  margin-top: 18px;
-  padding: 15px;
-  border-radius: 12px;
-  background: #f5f1ff;
+.resposta {
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--lilas);
+  overflow-wrap: anywhere;
+}
+
+.teclas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  max-width: 440px;
+  margin-top: 16px;
+}
+
+.teclas button {
+  min-height: 48px;
+  font-size: 18px;
+}
+
+#calcularBtn {
+  background: #25834b;
+}
+
+.secundario {
+  background: #756d86;
+  margin-top: 10px;
 }
 
 footer {
-  padding: 18px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
-  background: #f5f1ff;
-  color: #5b3cc4;
+  color: var(--branco);
+}
+
+footer p {
+  margin: 0 0 5px;
 }
 
 @media (max-width: 600px) {
@@ -122,16 +186,19 @@ footer {
     padding: 8px;
   }
 
-  header h1 {
-    font-size: 26px;
+  .menu {
+    border-radius: 14px 14px 0 0;
   }
 
-  main {
-    padding: 16px;
-  }
-
-  nav button {
+  .menu button {
     flex: 1 1 40%;
   }
+
+  .conteudo {
+    padding: 18px;
+  }
+
+  .cartoes {
+    grid-template-columns: 1fr;
+  }
 }
-```
