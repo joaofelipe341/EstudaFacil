@@ -1,107 +1,131 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EstudaFácil: um espaço gratuito para estudar e aprender.">
   <title>EstudaFácil</title>
   <link rel="stylesheet" href="estilo.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>📚 EstudaFácil</h1>
-      <p>Aprender pode ser mais simples!</p>
-    </header>
+  <header class="topo">
+    <h1>📚 EstudaFácil</h1>
+    <p>Aprender pode ser mais simples!</p>
+  </header>
 
-    <nav>
-      <button onclick="mostrarPagina('inicio')">🏠 Início</button>
-      <button onclick="mostrarPagina('materias')">📚 Matérias</button>
-      <button onclick="mostrarPagina('calculadora')">🧮 Calculadora</button>
-      <button onclick="mostrarPagina('dicas')">💡 Dicas</button>
-      <button onclick="mostrarPagina('progresso')">📊 Progresso</button>
-      <button onclick="mostrarPagina('perfil')">👤 Perfil</button>
-    </nav>
+  <nav class="menu" aria-label="Menu principal">
+    <button data-page="inicio">🏠 Início</button>
+    <button data-page="materias">📚 Matérias</button>
+    <button data-page="calculadora">🧮 Calculadora</button>
+    <button data-page="dicas">💡 Dicas</button>
+    <button data-page="progresso">📊 Progresso</button>
+    <button data-page="perfil">👤 Perfil</button>
+    <button id="sairBtn">↩️ Voltar ao início</button>
+  </nav>
 
-    <main>
-      <section id="inicio" class="pagina ativa">
-        <h2>Olá! 👋</h2>
-        <p>Bem-vindo ao EstudaFácil.</p>
-        <p>Escolha uma opção no menu para começar a estudar.</p>
-      </section>
+  <main class="conteudo">
+    <section id="inicio" class="pagina ativa">
+      <h2 id="boasVindas">Olá! 👋</h2>
+      <p>Bem-vindo ao EstudaFácil.</p>
+      <p>Escolha uma opção para começar a estudar.</p>
+      <div class="cartoes">
+        <button data-page="materias">📚 Estudar matérias</button>
+        <button data-page="calculadora">🧮 Abrir calculadora</button>
+        <button data-page="dicas">💡 Ver dicas</button>
+      </div>
+    </section>
 
-      <section id="materias" class="pagina">
-        <h2>📚 Matérias</h2>
-        <div class="grade">
-          <button onclick="abrirMateria('Matemática')">Matemática</button>
-          <button onclick="abrirMateria('Português')">Português</button>
-          <button onclick="abrirMateria('Ciências')">Ciências</button>
-          <button onclick="abrirMateria('Geografia')">Geografia</button>
-          <button onclick="abrirMateria('História')">História</button>
-          <button onclick="abrirMateria('Inglês')">Inglês</button>
-          <button onclick="abrirMateria('Física')">Física</button>
-          <button onclick="abrirMateria('Química')">Química</button>
-          <button onclick="abrirMateria('Biologia')">Biologia</button>
-          <button onclick="abrirMateria('Filosofia')">Filosofia</button>
-          <button onclick="abrirMateria('Sociologia')">Sociologia</button>
-        </div>
-        <div id="detalheMateria"></div>
-      </section>
+    <section id="materias" class="pagina">
+      <h2>📚 Matérias escolares</h2>
+      <p>Escolha uma matéria para estudar.</p>
+      <div id="listaMaterias" class="cartoes"></div>
 
-      <section id="calculadora" class="pagina">
-        <h2>🧮 Calculadora</h2>
-        <input id="visor" type="text" placeholder="Ex.: 5+5">
-        <div class="grade">
-          <button onclick="adicionar('7')">7</button>
-          <button onclick="adicionar('8')">8</button>
-          <button onclick="adicionar('9')">9</button>
-          <button onclick="adicionar('/')">÷</button>
-          <button onclick="adicionar('4')">4</button>
-          <button onclick="adicionar('5')">5</button>
-          <button onclick="adicionar('6')">6</button>
-          <button onclick="adicionar('*')">×</button>
-          <button onclick="adicionar('1')">1</button>
-          <button onclick="adicionar('2')">2</button>
-          <button onclick="adicionar('3')">3</button>
-          <button onclick="adicionar('-')">−</button>
-          <button onclick="adicionar('0')">0</button>
-          <button onclick="adicionar('+')">+</button>
-          <button onclick="limpar()">C</button>
-          <button onclick="calcular()">=</button>
-        </div>
-        <p id="resultado"></p>
-      </section>
+      <div id="areaMateria" class="painel" hidden>
+        <h3 id="tituloMateria"></h3>
+        <p id="descricaoMateria"></p>
+        <h3>Tem alguma dúvida?</h3>
+        <p>Escreva uma pergunta sobre esta matéria:</p>
+        <form id="formDuvida">
+          <label for="pergunta">Sua pergunta</label>
+          <textarea id="pergunta" rows="3"
+            placeholder="Ex.: O que são frações?"
+            required></textarea>
+          <button type="submit">Buscar uma explicação</button>
+        </form>
+        <div id="respostaDuvida" class="resposta" aria-live="polite"></div>
+        <button id="voltarMaterias" class="secundario">
+          ← Voltar às matérias
+        </button>
+      </div>
+    </section>
 
-      <section id="dicas" class="pagina">
-        <h2>💡 Dicas de estudo</h2>
-        <ul>
-          <li>Estude um pouco por dia.</li>
-          <li>Faça pausas para descansar.</li>
-          <li>Revise o conteúdo aprendido.</li>
-          <li>Pratique exercícios.</li>
-        </ul>
-      </section>
+    <section id="calculadora" class="pagina">
+      <h2>🧮 Calculadora</h2>
+      <p>Faça contas de adição, subtração, multiplicação e divisão.</p>
+      <label for="visor">Sua conta</label>
+      <input id="visor" type="text" inputmode="decimal"
+        placeholder="Ex.: 5+5">
+      <div class="teclas">
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+        <button data-value="/">÷</button>
+        <button data-value="4">4</button>
+        <button data-value="5">5</button>
+        <button data-value="6">6</button>
+        <button data-value="*">×</button>
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="3">3</button>
+        <button data-value="-">−</button>
+        <button data-value="0">0</button>
+        <button data-value=".">.</button>
+        <button data-value="+">+</button>
+        <button id="limparBtn">C</button>
+        <button data-value="(">(</button>
+        <button data-value=")">)</button>
+        <button id="apagarBtn">⌫</button>
+        <button id="calcularBtn">=</button>
+      </div>
+      <p id="resultadoConta" class="resposta" aria-live="polite"></p>
+    </section>
 
-      <section id="progresso" class="pagina">
-        <h2>📊 Meu progresso</h2>
-        <p>Marque quando terminar uma sessão de estudo:</p>
-        <button onclick="marcarProgresso()">Concluí uma sessão</button>
-        <p id="totalProgresso">Sessões concluídas: 0</p>
-      </section>
+    <section id="dicas" class="pagina">
+      <h2>💡 Dicas de estudo</h2>
+      <ul>
+        <li>Estude um pouco todos os dias.</li>
+        <li>Escolha um lugar tranquilo para estudar.</li>
+        <li>Faça exercícios para praticar o que aprendeu.</li>
+        <li>Faça pausas quando precisar descansar.</li>
+        <li>Revise suas anotações regularmente.</li>
+        <li>Peça ajuda quando não entender um assunto.</li>
+      </ul>
+    </section>
 
-      <section id="perfil" class="pagina">
-        <h2>👤 Perfil</h2>
-        <label for="nome">Seu nome:</label>
-        <input id="nome" type="text" placeholder="Digite seu nome">
-        <button onclick="salvarNome()">Salvar nome</button>
-        <p id="saudacao"></p>
-      </section>
-    </main>
+    <section id="progresso" class="pagina">
+      <h2>📊 Meu progresso</h2>
+      <p>Registre suas sessões de estudo neste dispositivo.</p>
+      <p id="totalProgresso">Sessões concluídas: 0</p>
+      <button id="concluirSessao">Concluí uma sessão</button>
+      <button id="desfazerSessao" class="secundario">Desfazer uma sessão</button>
+    </section>
 
-    <footer>EstudaFácil • Seu espaço de aprendizagem</footer>
-  </div>
+    <section id="perfil" class="pagina">
+      <h2>👤 Meu perfil</h2>
+      <form id="formPerfil">
+        <label for="nome">Como você quer ser chamado?</label>
+        <input id="nome" type="text" maxlength="50"
+          placeholder="Digite seu nome">
+        <button type="submit">Salvar nome</button>
+      </form>
+      <p id="mensagemPerfil" aria-live="polite"></p>
+    </section>
+  </main>
 
-  <script src="script.js"></script>
+  <footer>
+    <p>EstudaFácil • Seu espaço de aprendizagem 💜</p>
+    <small>Conteúdos básicos para apoiar seus estudos.</small>
+  </footer>
 </body>
 </html>
-```
