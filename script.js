@@ -2,569 +2,529 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => document.querySelectorAll(s);
 
-  const subjects = [
+  const materias = [
     {
-      id: "matematica", name: "Matemática", emoji: "➗",
-      description: "Números, operações e resolução de problemas.",
-      topics: [
-        ["Operações básicas", "Adição soma valores; subtração calcula a diferença; multiplicação representa somas repetidas; divisão reparte em partes iguais."],
-        ["Frações", "Uma fração representa partes de um todo. Em 3/4, o 3 é o numerador e o 4 é o denominador."],
-        ["Porcentagem", "Porcentagem é uma razão sobre 100. Por exemplo, 25% de 200 é 50."]
+      nome: "Matemática", icone: "🧮",
+      descricao: "Números, operações e problemas.",
+      conteudos: [
+        ["Adição", "A adição junta quantidades. Exemplo: 5 + 3 = 8."],
+        ["Subtração", "A subtração encontra a diferença. Exemplo: 9 - 4 = 5."],
+        ["Multiplicação", "A multiplicação representa somas repetidas. Exemplo: 4 × 3 = 12."],
+        ["Divisão", "A divisão reparte quantidades. Exemplo: 12 ÷ 3 = 4."],
+        ["Frações", "Uma fração representa partes de um todo. Em 1/2, consideramos uma de duas partes iguais."]
       ]
     },
     {
-      id: "portugues", name: "Português", emoji: "📖",
-      description: "Leitura, escrita, gramática e interpretação.",
-      topics: [
-        ["Classes de palavras", "Substantivos nomeiam seres e coisas; verbos indicam ações ou estados; adjetivos caracterizam os substantivos."],
-        ["Interpretação de texto", "Identifique o assunto, a ideia principal, as informações explícitas e o sentido das palavras no contexto."],
-        ["Pontuação", "Ponto final encerra uma frase; vírgula organiza elementos e pausas; interrogação marca perguntas."]
+      nome: "Português", icone: "📖",
+      descricao: "Leitura, escrita e gramática.",
+      conteudos: [
+        ["Substantivo", "Palavra que nomeia pessoas, lugares, objetos, sentimentos e ideias."],
+        ["Verbo", "Expressa ação, estado ou fenômeno. Exemplos: correr, estar e chover."],
+        ["Adjetivo", "Caracteriza um substantivo. Exemplo: livro interessante."],
+        ["Interpretação de texto", "Leia com atenção, encontre a ideia principal e procure as informações que justificam sua resposta."],
+        ["Pontuação", "O ponto final encerra uma frase; a interrogação indica pergunta; a exclamação pode indicar emoção."]
       ]
     },
     {
-      id: "ciencias", name: "Ciências", emoji: "🔬",
-      description: "Natureza, matéria, energia e seres vivos.",
-      topics: [
-        ["Método científico", "Observar, formular uma pergunta, propor uma hipótese, testar e analisar resultados são etapas comuns de uma investigação."],
-        ["Ecossistemas", "Um ecossistema reúne os seres vivos e os fatores não vivos de um ambiente e suas interações."],
-        ["Corpo humano", "O corpo possui sistemas que trabalham juntos, como os sistemas digestório, respiratório e circulatório."]
+      nome: "Ciências", icone: "🔬",
+      descricao: "Natureza, matéria e energia.",
+      conteudos: [
+        ["Matéria", "É tudo aquilo que tem massa e ocupa espaço."],
+        ["Ecossistema", "Conjunto dos seres vivos e dos fatores não vivos que interagem em um ambiente."],
+        ["Água", "É essencial à vida e pode ser encontrada nos estados sólido, líquido e gasoso."],
+        ["Energia", "Pode se manifestar como luz, calor, movimento e eletricidade."],
+        ["Meio ambiente", "Preservar o ambiente envolve reduzir desperdícios, evitar poluição e proteger a biodiversidade."]
       ]
     },
     {
-      id: "geografia", name: "Geografia", emoji: "🌍",
-      description: "Lugares, mapas, população e meio ambiente.",
-      topics: [
-        ["Mapas", "Mapas representam espaços geográficos. Legenda, escala, orientação e título ajudam na leitura."],
-        ["Clima e tempo", "Tempo é a condição atmosférica em um momento. Clima corresponde aos padrões observados durante longos períodos."],
-        ["População", "A geografia da população estuda distribuição, crescimento, migrações e características demográficas."]
+      nome: "Geografia", icone: "🌎",
+      descricao: "Mapas, população, clima e território.",
+      conteudos: [
+        ["Cartografia", "Área que estuda e produz mapas e outras representações da superfície terrestre."],
+        ["Clima", "Padrão das condições atmosféricas observado durante longos períodos."],
+        ["Relevo", "Formas da superfície terrestre, como montanhas, planaltos e planícies."],
+        ["População", "Conjunto de pessoas que vivem em determinado território."],
+        ["Urbanização", "Processo de crescimento da população urbana em relação à população rural."]
       ]
     },
     {
-      id: "historia", name: "História", emoji: "🏛️",
-      description: "Sociedades, acontecimentos e transformações ao longo do tempo.",
-      topics: [
-        ["Fontes históricas", "Documentos, fotografias, objetos, relatos e construções ajudam a investigar o passado."],
-        ["Linha do tempo", "Uma linha do tempo organiza acontecimentos em ordem cronológica."],
-        ["Brasil", "A história do Brasil envolve povos indígenas, colonização portuguesa, escravidão, independência e muitas transformações sociais."]
+      nome: "História", icone: "🏛️",
+      descricao: "Sociedades e acontecimentos do passado.",
+      conteudos: [
+        ["Fontes históricas", "Vestígios usados para estudar o passado, como documentos, fotografias, objetos e relatos."],
+        ["Antiguidade", "Período que inclui civilizações como Egito, Grécia e Roma antigas."],
+        ["Idade Média", "Período histórico tradicionalmente situado entre a Antiguidade e a Idade Moderna."],
+        ["Brasil colonial", "Período em que o território brasileiro esteve sob domínio português, iniciado no século XVI."],
+        ["Independência do Brasil", "Foi proclamada em 7 de setembro de 1822."]
       ]
     },
     {
-      id: "ingles", name: "Inglês", emoji: "🔤",
-      description: "Vocabulário, leitura e expressões em inglês.",
-      topics: [
-        ["Cumprimentos", "Hello significa olá; good morning significa bom dia; goodbye significa tchau."],
-        ["Verbo to be", "O verbo to be pode significar ser ou estar. Exemplos: I am, you are, he is."],
-        ["Vocabulário", "Aprenda palavras em frases e revise com frequência para entender seu uso."]
+      nome: "Inglês", icone: "🇬🇧",
+      descricao: "Vocabulário e expressões em inglês.",
+      conteudos: [
+        ["Saudações", "Hello = olá; Good morning = bom dia; Good night = boa noite."],
+        ["Pronomes", "I = eu; You = você; He = ele; She = ela; We = nós; They = eles ou elas."],
+        ["Verbo to be", "Pode significar ser ou estar. Exemplos: I am, You are, She is."],
+        ["Números", "One = um; Two = dois; Three = três; Four = quatro; Five = cinco."],
+        ["Cores", "Red = vermelho; Blue = azul; Green = verde; Yellow = amarelo; Black = preto."]
       ]
     },
     {
-      id: "fisica", name: "Física", emoji: "⚡",
-      description: "Movimento, forças, energia e fenômenos físicos.",
-      topics: [
-        ["Movimento", "Velocidade média é a distância percorrida dividida pelo tempo gasto, quando expressa nessa forma simples."],
-        ["Força", "Forças podem mudar o movimento ou deformar objetos. São medidas em newtons."],
-        ["Energia", "A energia aparece em formas como cinética, potencial, térmica, elétrica e química."]
+      nome: "Física", icone: "⚡",
+      descricao: "Movimento, forças e energia.",
+      conteudos: [
+        ["Movimento", "Acontece quando a posição de um objeto muda em relação a um referencial."],
+        ["Velocidade média", "É calculada dividindo a distância percorrida pelo tempo gasto."],
+        ["Força", "Pode alterar o movimento ou deformar um objeto."],
+        ["Energia", "Pode ser transferida e transformada, por exemplo, de elétrica em luminosa."],
+        ["Eletricidade", "A corrente elétrica é o movimento ordenado de cargas elétricas."]
       ]
     },
     {
-      id: "quimica", name: "Química", emoji: "🧪",
-      description: "Matéria, átomos, substâncias e reações.",
-      topics: [
-        ["Átomos", "Átomos possuem um núcleo com prótons e nêutrons e elétrons ao redor."],
-        ["Tabela periódica", "A tabela periódica organiza os elementos químicos pelo número atômico e por propriedades."],
-        ["Transformações", "Transformações físicas alteram estado ou forma; transformações químicas produzem substâncias diferentes."]
+      nome: "Química", icone: "⚗️",
+      descricao: "Átomos, substâncias e transformações.",
+      conteudos: [
+        ["Átomo", "Unidade básica da matéria, formada por núcleo e elétrons."],
+        ["Elemento químico", "É definido pelo número de prótons no núcleo de seus átomos."],
+        ["Molécula", "Conjunto de átomos ligados quimicamente."],
+        ["Misturas", "A combinação de substâncias pode formar misturas homogêneas ou heterogêneas."],
+        ["Reação química", "Transformação em que substâncias são convertidas em outras."]
       ]
     },
     {
-      id: "biologia", name: "Biologia", emoji: "🧬",
-      description: "Vida, células, organismos e ecossistemas.",
-      topics: [
-        ["Células", "A célula é a unidade básica dos seres vivos. Alguns organismos possuem uma célula; outros, muitas."],
-        ["Genética", "A genética estuda a hereditariedade e a variação. O DNA contém informações genéticas."],
-        ["Ecologia", "A ecologia investiga as relações dos seres vivos entre si e com o ambiente."]
+      nome: "Biologia", icone: "🧬",
+      descricao: "Vida, células e seres vivos.",
+      conteudos: [
+        ["Célula", "Unidade estrutural e funcional básica dos seres vivos."],
+        ["Fotossíntese", "Processo pelo qual plantas, algas e alguns organismos usam luz para produzir matéria orgânica."],
+        ["Ecologia", "Estuda as relações dos seres vivos entre si e com o ambiente."],
+        ["DNA", "Molécula que armazena informações genéticas."],
+        ["Corpo humano", "Possui sistemas que trabalham em conjunto, como os sistemas digestório, respiratório e circulatório."]
       ]
     },
     {
-      id: "filosofia", name: "Filosofia", emoji: "🤔",
-      description: "Pensamento crítico, conhecimento, ética e existência.",
-      topics: [
-        ["Pensamento crítico", "Analisar razões, verificar pressupostos e comparar argumentos ajuda a avaliar ideias."],
-        ["Ética", "A ética reflete sobre ações, valores, deveres e o que consideramos justo ou correto."],
-        ["Conhecimento", "A epistemologia investiga questões como o que podemos conhecer e como justificamos nossas crenças."]
+      nome: "Filosofia", icone: "💭",
+      descricao: "Pensamento crítico, ética e conhecimento.",
+      conteudos: [
+        ["Filosofia", "Investiga questões sobre existência, conhecimento, razão e valores."],
+        ["Ética", "Reflete sobre ações humanas, responsabilidades e o que consideramos correto ou justo."],
+        ["Lógica", "Estuda princípios do raciocínio válido e da argumentação."],
+        ["Sócrates", "Filósofo grego conhecido pelo diálogo e por questionar ideias."],
+        ["Conhecimento", "Pode ser investigado por meio da experiência, da razão e da observação."]
       ]
     },
     {
-      id: "sociologia", name: "Sociologia", emoji: "👥",
-      description: "Sociedade, cultura, instituições e relações sociais.",
-      topics: [
-        ["Cultura", "Cultura inclui valores, práticas, conhecimentos, símbolos e costumes aprendidos socialmente."],
-        ["Socialização", "Socialização é o processo pelo qual aprendemos normas e práticas da vida em sociedade."],
-        ["Instituições sociais", "Família, escola, Estado e outras instituições influenciam a organização da vida coletiva."]
+      nome: "Sociologia", icone: "👥",
+      descricao: "Sociedade, cultura e relações sociais.",
+      conteudos: [
+        ["Sociedade", "Pessoas que convivem e estabelecem relações, regras e instituições."],
+        ["Cultura", "Inclui costumes, valores, conhecimentos, crenças e práticas compartilhadas."],
+        ["Socialização", "Processo pelo qual aprendemos normas, valores e formas de convivência."],
+        ["Desigualdade social", "Diferenças no acesso a recursos, oportunidades e direitos."],
+        ["Instituições sociais", "Família, escola e Estado organizam aspectos da vida coletiva."]
       ]
     }
   ];
 
-  const readStore = (key, fallback) => {
+  let materiaAtual = null;
+  let conta = "";
+  let calculado = false;
+
+  function aviso(texto) {
+    const el = $("#notice");
+    if (!el) return;
+    el.textContent = texto;
+    el.hidden = false;
+    clearTimeout(aviso.timer);
+    aviso.timer = setTimeout(() => {
+      el.hidden = true;
+    }, 3000);
+  }
+
+  function abrirPagina(nome) {
+    const pagina = $("#page-" + nome);
+    if (!pagina) {
+      aviso("Página não encontrada. Confira os arquivos HTML.");
+      return;
+    }
+
+    $$(".page").forEach((p) => p.classList.remove("active"));
+    pagina.classList.add("active");
+
+    $$(".nav-btn[data-page]").forEach((b) => {
+      b.classList.toggle("active", b.dataset.page === nome);
+    });
+
+    $("#sidebar")?.classList.remove("open");
+    $("#menuToggle")?.setAttribute("aria-expanded", "false");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.addEventListener("click", (event) => {
+    const botao = event.target.closest("[data-page]");
+    if (botao) abrirPagina(botao.dataset.page);
+  });
+
+  const menuToggle = $("#menuToggle");
+  const sidebar = $("#sidebar");
+
+  if (menuToggle && sidebar) {
+    menuToggle.addEventListener("click", () => {
+      const aberto = sidebar.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(aberto));
+    });
+  }
+
+  function mostrarMaterias(filtro = "") {
+    const grade = $("#subjectGrid");
+    const vazio = $("#noSubjects");
+    if (!grade) return;
+
+    const termo = filtro.trim().toLocaleLowerCase("pt-BR");
+    const lista = materias.filter((m) =>
+      m.nome.toLocaleLowerCase("pt-BR").includes(termo)
+    );
+
+    grade.replaceChildren();
+
+    lista.forEach((m) => {
+      const botao = document.createElement("button");
+      botao.type = "button";
+      botao.className = "subject-card";
+
+      const icone = document.createElement("span");
+      icone.className = "subject-icon";
+      icone.textContent = m.icone;
+
+      const titulo = document.createElement("strong");
+      titulo.textContent = m.nome;
+
+      const descricao = document.createElement("span");
+      descricao.textContent = m.descricao;
+
+      botao.append(icone, titulo, descricao);
+      botao.addEventListener("click", () => abrirMateria(m.nome));
+      grade.appendChild(botao);
+    });
+
+    if (vazio) vazio.hidden = lista.length > 0;
+  }
+
+  function abrirMateria(nome) {
+    materiaAtual = materias.find((m) => m.nome === nome);
+    if (!materiaAtual) return;
+
+    $("#subjectTitle").textContent = materiaAtual.icone + " " + materiaAtual.nome;
+    $("#subjectDescription").textContent = materiaAtual.descricao;
+
+    const conteudo = $("#subjectContent");
+    if (conteudo) {
+      conteudo.replaceChildren();
+
+      materiaAtual.conteudos.forEach(([titulo, texto]) => {
+        const artigo = document.createElement("article");
+        artigo.className = "topic";
+
+        const h3 = document.createElement("h3");
+        h3.textContent = titulo;
+
+        const p = document.createElement("p");
+        p.textContent = texto;
+
+        artigo.append(h3, p);
+        conteudo.appendChild(artigo);
+      });
+    }
+
+    const pergunta = $("#doubtInput");
+    const resposta = $("#doubtAnswer");
+    if (pergunta) pergunta.value = "";
+    if (resposta) {
+      resposta.textContent = "";
+      resposta.hidden = true;
+    }
+
+    abrirPagina("materia");
+  }
+
+  $("#subjectSearch")?.addEventListener("input", (event) => {
+    mostrarMaterias(event.target.value);
+  });
+
+  $("#doubtForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const campo = $("#doubtInput");
+    const resposta = $("#doubtAnswer");
+    if (!campo || !resposta || !materiaAtual) return;
+
+    const pergunta = campo.value.trim().toLocaleLowerCase("pt-BR");
+    if (!pergunta) {
+      resposta.textContent = "Digite sua dúvida primeiro.";
+      resposta.hidden = false;
+      return;
+    }
+
+    const palavras = pergunta.split(/\s+/).filter((p) => p.length > 2);
+    const encontrados = materiaAtual.conteudos.filter(([titulo, texto]) => {
+      const conteudo = (titulo + " " + texto).toLocaleLowerCase("pt-BR");
+      return conteudo.includes(pergunta) ||
+        palavras.some((palavra) => conteudo.includes(palavra));
+    });
+
+    resposta.textContent = encontrados.length
+      ? encontrados.map(([titulo, texto]) => titulo + ": " + texto).join("\n\n")
+      : "Não encontrei essa dúvida nos resumos desta matéria. Experimente usar uma palavra do conteúdo. Esta pesquisa funciona com os textos disponíveis e não usa inteligência artificial.";
+
+    resposta.hidden = false;
+  });
+
+  function lerProgresso() {
     try {
-      const value = localStorage.getItem(key);
-      return value === null ? fallback : JSON.parse(value);
+      const dados = JSON.parse(localStorage.getItem("estudafacil_completed") || "[]");
+      return Array.isArray(dados) ? dados : [];
     } catch {
-      return fallback;
+      return [];
     }
-  };
+  }
 
-  const saveStore = (key, value) => {
+  function guardarProgresso(lista) {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
+      localStorage.setItem("estudafacil_completed", JSON.stringify(lista));
     } catch {
-      return false;
+      aviso("Não foi possível guardar o progresso neste navegador.");
     }
-  };
-
-  let completed = readStore("estudafacil_completed", []);
-  if (!Array.isArray(completed)) completed = [];
-  completed = completed.filter(id => subjects.some(s => s.id === id));
-
-  let studentName = readStore("estudafacil_name", "");
-  if (typeof studentName !== "string") studentName = "";
-  let currentSubject = null;
-  let currentPage = "inicio";
-
-  const notice = $("#notice");
-
-  function showNotice(message) {
-    notice.textContent = message;
-    notice.hidden = false;
   }
 
-  function goToPage(page) {
-    const allowed = [
-      "inicio", "materias", "materia", "calculadora",
-      "dicas", "progresso", "perfil"
-    ];
-    if (!allowed.includes(page)) page = "inicio";
-    if (page === "materia" && !currentSubject) page = "materias";
+  function atualizarProgresso() {
+    const concluidas = lerProgresso();
+    const quantidade = materias.filter((m) => concluidas.includes(m.nome)).length;
+    const porcentagem = Math.round(quantidade / materias.length * 100);
 
-    currentPage = page;
-    $$(".page").forEach(section => {
-      section.classList.toggle("active", section.id === "page-" + page);
-    });
+    if ($("#progressCount")) {
+      $("#progressCount").textContent = quantidade + " de " + materias.length + " matérias";
+    }
+    if ($("#progressPercent")) {
+      $("#progressPercent").textContent = porcentagem + "%";
+    }
+    if ($("#progressBar")) {
+      $("#progressBar").style.width = porcentagem + "%";
+    }
+    if ($("#progressMessage")) {
+      $("#progressMessage").textContent = quantidade === materias.length
+        ? "Parabéns! Você estudou todas as matérias."
+        : quantidade === 0
+          ? "Comece estudando qualquer matéria."
+          : "Muito bem! Continue no seu ritmo.";
+    }
+    if ($("#homeProgress")) {
+      $("#homeProgress").textContent =
+        quantidade + " de " + materias.length + " matérias concluídas (" + porcentagem + "%).";
+    }
 
-    $$(".nav-btn[data-page]").forEach(button => {
-      const target = button.dataset.page;
-      button.classList.toggle(
-        "active",
-        target === page || (page === "materia" && target === "materias")
-      );
-    });
-
-    $("#sidebar").classList.remove("open");
-    $("#menuToggle").setAttribute("aria-expanded", "false");
-    $("#menuToggle").setAttribute("aria-label", "Abrir menu");
-    notice.hidden = true;
-
-    if (page === "progresso") renderProgress();
-    if (page === "perfil") updateProfile();
-    if (page === "inicio") updateHome();
-
-    window.scrollTo({ top: 0, behavior: "auto" });
+    const lista = $("#progressList");
+    if (lista) {
+      lista.replaceChildren();
+      materias.forEach((m) => {
+        const item = document.createElement("p");
+        item.textContent = (concluidas.includes(m.nome) ? "✅ " : "⬜ ") + m.nome;
+        lista.appendChild(item);
+      });
+    }
   }
 
-  // Navegação: todos os botões com data-page abrem a página correspondente.
-  document.addEventListener("click", event => {
-    const button = event.target.closest("[data-page]");
-    if (!button) return;
-
-    event.preventDefault();
-    const page = button.dataset.page;
-
-    if (page === "materia") return;
-    goToPage(page);
-  });
-
-  $("#menuToggle").addEventListener("click", () => {
-    const open = $("#sidebar").classList.toggle("open");
-    $("#menuToggle").setAttribute("aria-expanded", String(open));
-    $("#menuToggle").setAttribute(
-      "aria-label", open ? "Fechar menu" : "Abrir menu"
-    );
-  });
-
-  function renderSubjects(filter = "") {
-    const grid = $("#subjectGrid");
-    const term = filter.trim().toLocaleLowerCase("pt-BR");
-    const filtered = subjects.filter(s =>
-      (s.name + " " + s.description).toLocaleLowerCase("pt-BR").includes(term)
-    );
-
-    grid.replaceChildren();
-    $("#noSubjects").hidden = filtered.length !== 0;
-
-    filtered.forEach(subject => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "subject-card";
-
-      const emoji = document.createElement("span");
-      emoji.className = "subject-emoji";
-      emoji.textContent = subject.emoji;
-
-      const title = document.createElement("strong");
-      title.textContent = subject.name;
-
-      const description = document.createElement("p");
-      description.textContent = subject.description;
-
-      const status = document.createElement("p");
-      status.textContent = completed.includes(subject.id)
-        ? "✓ Matéria estudada"
-        : "Toque para estudar →";
-
-      button.append(emoji, title, description, status);
-      button.addEventListener("click", () => openSubject(subject.id));
-      grid.append(button);
-    });
-  }
-
-  function openSubject(id) {
-    const subject = subjects.find(s => s.id === id);
-    if (!subject) {
-      showNotice("Não foi possível encontrar essa matéria.");
+  $("#finishSubject")?.addEventListener("click", () => {
+    if (!materiaAtual) {
+      aviso("Abra uma matéria primeiro.");
       return;
     }
 
-    currentSubject = subject;
-    $("#subjectTitle").textContent = subject.emoji + " " + subject.name;
-    $("#subjectDescription").textContent = subject.description;
+    const concluidas = lerProgresso();
+    if (!concluidas.includes(materiaAtual.nome)) {
+      concluidas.push(materiaAtual.nome);
+      guardarProgresso(concluidas);
+    }
 
-    const content = $("#subjectContent");
-    content.replaceChildren();
-
-    subject.topics.forEach(([title, explanation]) => {
-      const article = document.createElement("article");
-      article.className = "topic";
-
-      const heading = document.createElement("h3");
-      heading.textContent = title;
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent = explanation;
-
-      article.append(heading, paragraph);
-      content.append(article);
-    });
-
-    $("#doubtInput").value = "";
-    $("#doubtAnswer").textContent = "";
-    $("#doubtAnswer").hidden = true;
-
-    $("#finishSubject").textContent = completed.includes(id)
-      ? "✓ Matéria já estudada — desmarcar"
-      : "✓ Marcar como estudada";
-
-    goToPage("materia");
-  }
-
-  $("#subjectSearch").addEventListener("input", event => {
-    renderSubjects(event.target.value);
+    atualizarProgresso();
+    aviso("Matéria marcada como estudada!");
   });
 
-  // Pesquisa respostas nos conteúdos educativos disponíveis.
-  $("#doubtForm").addEventListener("submit", event => {
+  $("#resetProgress")?.addEventListener("click", () => {
+    if (confirm("Deseja zerar seu progresso?")) {
+      guardarProgresso([]);
+      atualizarProgresso();
+      aviso("Progresso zerado.");
+    }
+  });
+
+  function atualizarBoasVindas(nome) {
+    if ($("#welcomeTitle")) {
+      $("#welcomeTitle").textContent = nome ? "Olá, " + nome + "! 👋" : "Olá! 👋";
+    }
+  }
+
+  try {
+    const nome = localStorage.getItem("estudafacil_name") || "";
+    if ($("#studentName")) $("#studentName").value = nome;
+    atualizarBoasVindas(nome);
+  } catch {
+    atualizarBoasVindas("");
+  }
+
+  $("#profileForm")?.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!currentSubject) return;
 
-    const question = $("#doubtInput").value.trim().toLocaleLowerCase("pt-BR");
-    const answer = $("#doubtAnswer");
-    if (!question) return;
+    const campo = $("#studentName");
+    if (!campo) return;
 
-    const topic = currentSubject.topics.find(([title, explanation]) =>
-      (title + " " + explanation).toLocaleLowerCase("pt-BR")
-        .split(/[.,;:!?()\s]+/)
-        .filter(word => word.length > 3)
-        .some(word => question.includes(word))
-    );
-
-    const fallback = currentSubject.topics.find(([title]) =>
-      question.includes(title.toLocaleLowerCase("pt-BR"))
-    );
-
-    const result = topic || fallback;
-
-    answer.textContent = result
-      ? result[0] + "\n\n" + result[1]
-      : "Ainda não encontrei uma resposta para essa pergunta nos conteúdos desta matéria. Tente pesquisar uma palavra do resumo ou consulte seu professor ou material didático.";
-    answer.hidden = false;
-  });
-
-  // Progresso das matérias.
-  function renderProgress() {
-    const count = completed.length;
-    const percent = Math.round(count / subjects.length * 100);
-
-    $("#progressCount").textContent = count + " de " + subjects.length + " matérias";
-    $("#progressPercent").textContent = percent + "%";
-    $("#progressBar").style.width = percent + "%";
-    $("#progressMessage").textContent = count === subjects.length
-      ? "Parabéns! Você marcou todas as matérias como estudadas."
-      : count === 0
-        ? "Comece estudando qualquer matéria."
-        : "Continue assim! Você já marcou " + count + " matéria(s).";
-
-    const list = $("#progressList");
-    list.replaceChildren();
-
-    subjects.forEach(subject => {
-      const row = document.createElement("div");
-      row.className = "progress-item";
-
-      const label = document.createElement("span");
-      label.textContent = subject.emoji + " " + subject.name +
-        (completed.includes(subject.id) ? " — Concluída" : " — Pendente");
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = completed.includes(subject.id) ? "Desmarcar" : "Marcar";
-      button.addEventListener("click", () => toggleCompleted(subject.id));
-
-      row.append(label, button);
-      list.append(row);
-    });
-  }
-
-  function toggleCompleted(id) {
-    if (completed.includes(id)) {
-      completed = completed.filter(item => item !== id);
-    } else {
-      completed.push(id);
+    const nome = campo.value.trim().slice(0, 50);
+    try {
+      localStorage.setItem("estudafacil_name", nome);
+      atualizarBoasVindas(nome);
+      if ($("#profileMessage")) {
+        $("#profileMessage").textContent = "Perfil salvo neste navegador!";
+      }
+    } catch {
+      aviso("Não foi possível salvar o perfil neste navegador.");
     }
-
-    const saved = saveStore("estudafacil_completed", completed);
-    renderProgress();
-    renderSubjects($("#subjectSearch").value);
-    updateHome();
-
-    if (currentSubject && currentSubject.id === id) {
-      $("#finishSubject").textContent = completed.includes(id)
-        ? "✓ Matéria já estudada — desmarcar"
-        : "✓ Marcar como estudada";
-    }
-
-    showNotice(saved
-      ? "Progresso atualizado!"
-      : "Progresso atualizado nesta sessão, mas não foi possível salvá-lo no navegador.");
-  }
-
-  $("#finishSubject").addEventListener("click", () => {
-    if (currentSubject) toggleCompleted(currentSubject.id);
   });
 
-  $("#resetProgress").addEventListener("click", () => {
-    if (completed.length === 0) {
-      showNotice("Seu progresso já está zerado.");
-      return;
-    }
+  $("#logoutBtn")?.addEventListener("click", () => abrirPagina("inicio"));
 
-    if (!window.confirm("Quer mesmo zerar o progresso de todas as matérias?")) {
-      return;
-    }
-
-    completed = [];
-    const saved = saveStore("estudafacil_completed", completed);
-    renderProgress();
-    renderSubjects($("#subjectSearch").value);
-    updateHome();
-    showNotice(saved
-      ? "Seu progresso foi zerado."
-      : "O progresso foi zerado nesta sessão, mas não pôde ser salvo.");
-  });
-
-  // Perfil do estudante.
-  function updateProfile() {
-    $("#studentName").value = studentName;
-  }
-
-  function updateHome() {
-    $("#welcomeTitle").textContent = studentName
-      ? "Olá, " + studentName + "! 👋"
-      : "Olá! 👋";
-
-    $("#homeProgress").textContent = completed.length === 0
-      ? "Você ainda não marcou matérias como estudadas. Escolha uma para começar!"
-      : "Você já marcou " + completed.length + " de " + subjects.length +
-        " matérias como estudadas. Continue aprendendo!";
-  }
-
-  $("#profileForm").addEventListener("submit", event => {
-    event.preventDefault();
-    studentName = $("#studentName").value.trim().slice(0, 50);
-
-    const saved = saveStore("estudafacil_name", studentName);
-    updateHome();
-
-    $("#profileMessage").textContent = saved
-      ? "Perfil salvo neste navegador!"
-      : "Não foi possível salvar o perfil neste navegador.";
-
-    showNotice(saved ? "Perfil atualizado!" : "Não foi possível salvar o perfil.");
-  });
-
-  $("#logoutBtn").addEventListener("click", () => {
-    goToPage("inicio");
-    showNotice("Você voltou ao menu principal. Seus dados salvos foram mantidos.");
-  });
-
-  // Calculadora com análise segura de expressões; não usa eval().
-  const display = $("#calcDisplay");
-  const calcMessage = $("#calcMessage");
-  let expression = "";
-  let justCalculated = false;
-
-  function updateDisplay() {
-    display.value = expression
-      .replace(/\*/g, "×")
-      .replace(/\//g, "÷") || "0";
-  }
-
-  function calculate(source) {
-    const input = source.replace(/\s/g, "");
-    if (!input || !/^[0-9+\-*/().]+$/.test(input)) {
+  // Calculadora: analisa operações sem executar código arbitrário.
+  function calcular(expressao) {
+    if (!expressao || !/^[0-9+\-*/().\s]+$/.test(expressao)) {
       throw new Error("Conta inválida.");
     }
 
-    let position = 0;
+    let posicao = 0;
 
-    function parseExpression() {
-      let value = parseTerm();
-      while (input[position] === "+" || input[position] === "-") {
-        const operator = input[position++];
-        const next = parseTerm();
-        value = operator === "+" ? value + next : value - next;
-      }
-      return value;
+    function espacos() {
+      while (expressao[posicao] === " ") posicao++;
     }
 
-    function parseTerm() {
-      let value = parseUnary();
-      while (input[position] === "*" || input[position] === "/") {
-        const operator = input[position++];
-        const next = parseUnary();
-        if (operator === "/" && next === 0) {
+    function fator() {
+      espacos();
+
+      if (expressao[posicao] === "+") {
+        posicao++;
+        return fator();
+      }
+      if (expressao[posicao] === "-") {
+        posicao++;
+        return -fator();
+      }
+      if (expressao[posicao] === "(") {
+        posicao++;
+        const valor = soma();
+        espacos();
+        if (expressao[posicao] !== ")") throw new Error("Parênteses incompletos.");
+        posicao++;
+        return valor;
+      }
+
+      const trecho = expressao.slice(posicao).match(/^(?:\d+\.?\d*|\.\d+)/);
+      if (!trecho) throw new Error("Conta inválida.");
+      posicao += trecho[0].length;
+      return Number(trecho[0]);
+    }
+
+    function produto() {
+      let valor = fator();
+      espacos();
+
+      while (expressao[posicao] === "*" || expressao[posicao] === "/") {
+        const operador = expressao[posicao++];
+        const direito = fator();
+
+        if (operador === "/" && direito === 0) {
           throw new Error("Não é possível dividir por zero.");
         }
-        value = operator === "*" ? value * next : value / next;
+
+        valor = operador === "*" ? valor * direito : valor / direito;
+        espacos();
       }
-      return value;
+      return valor;
     }
 
-    function parseUnary() {
-      if (input[position] === "+") {
-        position++;
-        return parseUnary();
+    function soma() {
+      let valor = produto();
+      espacos();
+
+      while (expressao[posicao] === "+" || expressao[posicao] === "-") {
+        const operador = expressao[posicao++];
+        const direito = produto();
+        valor = operador === "+" ? valor + direito : valor - direito;
+        espacos();
       }
-      if (input[position] === "-") {
-        position++;
-        return -parseUnary();
-      }
-      return parsePrimary();
+      return valor;
     }
 
-    function parsePrimary() {
-      if (input[position] === "(") {
-        position++;
-        const value = parseExpression();
-        if (input[position] !== ")") {
-          throw new Error("Confira os parênteses.");
+    const resultado = soma();
+    espacos();
+
+    if (posicao !== expressao.length || !Number.isFinite(resultado)) {
+      throw new Error("Conta inválida.");
+    }
+    return Number(resultado.toPrecision(12));
+  }
+
+  function atualizarVisor() {
+    if ($("#calcDisplay")) $("#calcDisplay").value = conta || "0";
+  }
+
+  $$(".calc-grid button").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const acao = botao.dataset.calc;
+      const valor = botao.dataset.value;
+      const mensagem = $("#calcMessage");
+
+      if (acao === "clear") {
+        conta = "";
+        calculado = false;
+        if (mensagem) mensagem.textContent = "Digite uma conta.";
+        atualizarVisor();
+        return;
+      }
+
+      if (acao === "backspace") {
+        conta = conta.slice(0, -1);
+        calculado = false;
+        atualizarVisor();
+        return;
+      }
+
+      if (acao === "equals") {
+        try {
+          const resultado = calcular(conta);
+          conta = String(resultado);
+          calculado = true;
+          if (mensagem) mensagem.textContent = "Resultado calculado.";
+          atualizarVisor();
+        } catch (erro) {
+          if (mensagem) mensagem.textContent = erro.message || "Conta inválida.";
         }
-        position++;
-        return value;
-      }
-
-      const start = position;
-      let dots = 0;
-      while (/[0-9.]/.test(input[position] || "")) {
-        if (input[position] === ".") dots++;
-        if (dots > 1) throw new Error("Número inválido.");
-        position++;
-      }
-
-      if (position === start) throw new Error("Confira a conta.");
-      const number = Number(input.slice(start, position));
-      if (!Number.isFinite(number)) throw new Error("Número inválido.");
-      return number;
-    }
-
-    const result = parseExpression();
-    if (position !== input.length || !Number.isFinite(result)) {
-      throw new Error("Confira a conta.");
-    }
-    if (Math.abs(result) > 1e15) throw new Error("Resultado muito grande.");
-    return Number(result.toPrecision(12));
-  }
-
-  function calculateAction() {
-    try {
-      const result = calculate(expression);
-      expression = String(result);
-      justCalculated = true;
-      updateDisplay();
-      calcMessage.textContent = "Resultado: " + expression;
-    } catch (error) {
-      calcMessage.textContent = error.message || "Conta inválida.";
-    }
-  }
-
-  $$(".calc-grid button").forEach(button => {
-    button.addEventListener("click", () => {
-      const action = button.dataset.calc;
-
-      if (action === "clear") {
-        expression = "";
-        justCalculated = false;
-        calcMessage.textContent = "Calculadora limpa.";
-        updateDisplay();
         return;
       }
 
-      if (action === "backspace") {
-        expression = expression.slice(0, -1);
-        justCalculated = false;
-        updateDisplay();
-        return;
+      if (valor !== undefined) {
+        const operador = ["+", "-", "*", "/"].includes(valor);
+
+        if (calculado && !operador && valor !== ")") conta = "";
+        if (calculado && operador) calculado = false;
+
+        conta += valor;
+        calculado = false;
+        if (mensagem) mensagem.textContent = "Digite uma conta e aperte =.";
+        atualizarVisor();
       }
-
-      if (action === "equals") {
-        calculateAction();
-        return;
-      }
-
-      const value = button.dataset.value;
-      if (!value) return;
-
-      if (justCalculated && /[0-9.(]/.test(value)) {
-        expression = "";
-      }
-      justCalculated = false;
-
-      if (expression.length >= 100) {
-        calcMessage.textContent = "Conta muito longa. Limpe a calculadora para continuar.";
-        return;
-      }
-
-      expression += value;
-      updateDisplay();
-      calcMessage.textContent = "Use = para ver o resultado.";
     });
   });
 
-  // Inicialização.
-  renderSubjects();
-  renderProgress();
-  updateProfile();
-  updateHome();
-  goToPage("inicio");
+  mostrarMaterias();
+  atualizarProgresso();
+  atualizarVisor();
 });
