@@ -1,131 +1,148 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="EstudaFácil: um espaço gratuito para estudar e aprender.">
   <title>EstudaFácil</title>
   <link rel="stylesheet" href="estilo.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <header class="topo">
-    <h1>📚 EstudaFácil</h1>
-    <p>Aprender pode ser mais simples!</p>
+    <div class="marca">💜 EstudaFácil</div>
+    <button id="menuBtn" class="menu-btn" type="button">☰ Menu</button>
   </header>
 
-  <nav class="menu" aria-label="Menu principal">
-    <button data-page="inicio">🏠 Início</button>
-    <button data-page="materias">📚 Matérias</button>
-    <button data-page="calculadora">🧮 Calculadora</button>
-    <button data-page="dicas">💡 Dicas</button>
-    <button data-page="progresso">📊 Progresso</button>
-    <button data-page="perfil">👤 Perfil</button>
-    <button id="sairBtn">↩️ Voltar ao início</button>
-  </nav>
+  <div class="layout">
+    <nav id="menu" class="menu">
+      <button class="nav-btn ativo" data-page="inicio">🏠 Início</button>
+      <button class="nav-btn" data-page="materias">📚 Matérias</button>
+      <button class="nav-btn" data-page="calculadora">🧮 Calculadora</button>
+      <button class="nav-btn" data-page="dicas">💡 Dicas</button>
+      <button class="nav-btn" data-page="progresso">📊 Progresso</button>
+      <button class="nav-btn" data-page="perfil">👤 Perfil</button>
+    </nav>
 
-  <main class="conteudo">
-    <section id="inicio" class="pagina ativa">
-      <h2 id="boasVindas">Olá! 👋</h2>
-      <p>Bem-vindo ao EstudaFácil.</p>
-      <p>Escolha uma opção para começar a estudar.</p>
-      <div class="cartoes">
-        <button data-page="materias">📚 Estudar matérias</button>
-        <button data-page="calculadora">🧮 Abrir calculadora</button>
-        <button data-page="dicas">💡 Ver dicas</button>
-      </div>
-    </section>
+    <main class="conteudo">
+      <section id="inicio" class="pagina">
+        <div class="hero">
+          <p class="etiqueta">SEU ESPAÇO DE APRENDIZAGEM</p>
+          <h1>Olá! 👋</h1>
+          <h2>Bem-vindo ao EstudaFácil.</h2>
+          <p>Aprender pode ser mais simples. Escolha uma opção para começar!</p>
+          <button class="botao principal" data-go="materias">Explorar matérias →</button>
+        </div>
 
-    <section id="materias" class="pagina">
-      <h2>📚 Matérias escolares</h2>
-      <p>Escolha uma matéria para estudar.</p>
-      <div id="listaMaterias" class="cartoes"></div>
+        <div class="cartoes">
+          <button class="cartao" data-go="materias">
+            <span>📚</span><strong>Matérias</strong>
+            <small>Estude diferentes assuntos</small>
+          </button>
+          <button class="cartao" data-go="calculadora">
+            <span>🧮</span><strong>Calculadora</strong>
+            <small>Resolva suas contas</small>
+          </button>
+          <button class="cartao" data-go="dicas">
+            <span>💡</span><strong>Dicas de estudo</strong>
+            <small>Aprenda a se organizar</small>
+          </button>
+        </div>
+      </section>
 
-      <div id="areaMateria" class="painel" hidden>
-        <h3 id="tituloMateria"></h3>
-        <p id="descricaoMateria"></p>
-        <h3>Tem alguma dúvida?</h3>
-        <p>Escreva uma pergunta sobre esta matéria:</p>
-        <form id="formDuvida">
-          <label for="pergunta">Sua pergunta</label>
-          <textarea id="pergunta" rows="3"
-            placeholder="Ex.: O que são frações?"
-            required></textarea>
-          <button type="submit">Buscar uma explicação</button>
-        </form>
-        <div id="respostaDuvida" class="resposta" aria-live="polite"></div>
-        <button id="voltarMaterias" class="secundario">
-          ← Voltar às matérias
+      <section id="materias" class="pagina escondida">
+        <h1>📚 Matérias</h1>
+        <p>Escolha uma matéria ou pesquise uma dúvida.</p>
+
+        <label for="buscaMateria">Pesquisar uma dúvida</label>
+        <input id="buscaMateria" type="search"
+          placeholder="Ex.: O que é fotossíntese?">
+
+        <button id="buscarDuvida" class="botao principal" type="button">
+          Pesquisar
         </button>
-      </div>
-    </section>
+        <div id="respostaDuvida" class="resposta" aria-live="polite">
+          Digite uma pergunta e clique em Pesquisar.
+        </div>
 
-    <section id="calculadora" class="pagina">
-      <h2>🧮 Calculadora</h2>
-      <p>Faça contas de adição, subtração, multiplicação e divisão.</p>
-      <label for="visor">Sua conta</label>
-      <input id="visor" type="text" inputmode="decimal"
-        placeholder="Ex.: 5+5">
-      <div class="teclas">
-        <button data-value="7">7</button>
-        <button data-value="8">8</button>
-        <button data-value="9">9</button>
-        <button data-value="/">÷</button>
-        <button data-value="4">4</button>
-        <button data-value="5">5</button>
-        <button data-value="6">6</button>
-        <button data-value="*">×</button>
-        <button data-value="1">1</button>
-        <button data-value="2">2</button>
-        <button data-value="3">3</button>
-        <button data-value="-">−</button>
-        <button data-value="0">0</button>
-        <button data-value=".">.</button>
-        <button data-value="+">+</button>
-        <button id="limparBtn">C</button>
-        <button data-value="(">(</button>
-        <button data-value=")">)</button>
-        <button id="apagarBtn">⌫</button>
-        <button id="calcularBtn">=</button>
-      </div>
-      <p id="resultadoConta" class="resposta" aria-live="polite"></p>
-    </section>
+        <h2>Escolha uma matéria</h2>
+        <div id="listaMaterias" class="materias-grid"></div>
+        <div id="detalheMateria" class="resposta escondida" aria-live="polite"></div>
+      </section>
 
-    <section id="dicas" class="pagina">
-      <h2>💡 Dicas de estudo</h2>
-      <ul>
-        <li>Estude um pouco todos os dias.</li>
-        <li>Escolha um lugar tranquilo para estudar.</li>
-        <li>Faça exercícios para praticar o que aprendeu.</li>
-        <li>Faça pausas quando precisar descansar.</li>
-        <li>Revise suas anotações regularmente.</li>
-        <li>Peça ajuda quando não entender um assunto.</li>
-      </ul>
-    </section>
+      <section id="calculadora" class="pagina escondida">
+        <h1>🧮 Calculadora</h1>
+        <p>Digite uma conta ou use os botões abaixo.</p>
 
-    <section id="progresso" class="pagina">
-      <h2>📊 Meu progresso</h2>
-      <p>Registre suas sessões de estudo neste dispositivo.</p>
-      <p id="totalProgresso">Sessões concluídas: 0</p>
-      <button id="concluirSessao">Concluí uma sessão</button>
-      <button id="desfazerSessao" class="secundario">Desfazer uma sessão</button>
-    </section>
+        <div class="calculadora">
+          <label class="sr-only" for="visor">Conta</label>
+          <input id="visor" type="text" inputmode="decimal"
+            placeholder="Ex.: 5+5" autocomplete="off">
+          <div class="teclas">
+            <button data-key="(">(</button>
+            <button data-key=")">)</button>
+            <button data-action="limpar">C</button>
+            <button data-key="÷">÷</button>
+            <button data-key="7">7</button>
+            <button data-key="8">8</button>
+            <button data-key="9">9</button>
+            <button data-key="×">×</button>
+            <button data-key="4">4</button>
+            <button data-key="5">5</button>
+            <button data-key="6">6</button>
+            <button data-key="-">−</button>
+            <button data-key="1">1</button>
+            <button data-key="2">2</button>
+            <button data-key="3">3</button>
+            <button data-key="+">+</button>
+            <button data-key="0">0</button>
+            <button data-key=".">.</button>
+            <button data-action="apagar">⌫</button>
+            <button data-action="calcular" class="igual">=</button>
+          </div>
+          <p id="resultadoConta" class="resultado" aria-live="polite">
+            O resultado aparecerá aqui.
+          </p>
+        </div>
+      </section>
 
-    <section id="perfil" class="pagina">
-      <h2>👤 Meu perfil</h2>
-      <form id="formPerfil">
-        <label for="nome">Como você quer ser chamado?</label>
-        <input id="nome" type="text" maxlength="50"
-          placeholder="Digite seu nome">
-        <button type="submit">Salvar nome</button>
-      </form>
-      <p id="mensagemPerfil" aria-live="polite"></p>
-    </section>
-  </main>
+      <section id="dicas" class="pagina escondida">
+        <h1>💡 Dicas de estudo</h1>
+        <p>Pequenas atitudes podem ajudar na aprendizagem.</p>
+        <div id="listaDicas" class="dicas-lista"></div>
+        <button id="novaDica" class="botao principal" type="button">
+          Mostrar outra dica
+        </button>
+      </section>
 
-  <footer>
-    <p>EstudaFácil • Seu espaço de aprendizagem 💜</p>
-    <small>Conteúdos básicos para apoiar seus estudos.</small>
-  </footer>
+      <section id="progresso" class="pagina escondida">
+        <h1>📊 Meu progresso</h1>
+        <div class="painel">
+          <p>Contas resolvidas</p>
+          <strong id="totalContas">0</strong>
+        </div>
+        <div class="painel">
+          <p>Matérias visitadas</p>
+          <strong id="totalMaterias">0</strong>
+        </div>
+        <p class="observacao">O progresso fica salvo neste navegador, quando o armazenamento está disponível.</p>
+        <button id="limparProgresso" class="botao" type="button">
+          Reiniciar progresso
+        </button>
+      </section>
+
+      <section id="perfil" class="pagina escondida">
+        <h1>👤 Meu perfil</h1>
+        <label for="nomePerfil">Como você quer ser chamado?</label>
+        <input id="nomePerfil" type="text" placeholder="Digite seu nome">
+        <button id="salvarPerfil" class="botao principal" type="button">
+          Salvar nome
+        </button>
+        <p id="mensagemPerfil" aria-live="polite"></p>
+      </section>
+
+      <footer>EstudaFácil · Aprenda no seu ritmo 💜</footer>
+    </main>
+  </div>
 </body>
 </html>
