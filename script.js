@@ -1,383 +1,429 @@
-"use strict";
 
-const $ = (seletor) => document.querySelector(seletor);
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = (seletor) => document.querySelector(seletor);
+  const $$ = (seletor) => [...document.querySelectorAll(seletor)];
 
-const materias = {
-  "Matemática": {
-    descricao: "Estude números, operações, frações, porcentagens e geometria."
-  },
-  "Português": {
-    descricao: "Pratique leitura, interpretação de textos, gramática e escrita."
-  },
-  "Ciências": {
-    descricao: "Aprenda sobre a natureza, os seres vivos e o ambiente."
-  },
-  "Geografia": {
-    descricao: "Estude mapas, continentes, clima, população e paisagens."
-  },
-  "História": {
-    descricao: "Conheça acontecimentos, sociedades e mudanças ao longo do tempo."
-  },
-  "Inglês": {
-    descricao: "Pratique vocabulário, expressões, leitura e frases em inglês."
-  },
-  "Física": {
-    descricao: "Conheça movimento, energia, força, luz e eletricidade."
-  },
-  "Química": {
-    descricao: "Aprenda sobre matéria, substâncias, elementos e transformações."
-  },
-  "Biologia": {
-    descricao: "Estude os seres vivos, células, ecossistemas e corpo humano."
-  },
-  "Filosofia": {
-    descricao: "Explore ideias, conhecimento, ética e pensamento crítico."
-  },
-  "Sociologia": {
-    descricao: "Estude sociedade, cultura, grupos sociais e relações humanas."
+  // Salvamento simples no navegador
+  const lerDados = () => {
+    try {
+      return JSON.parse(localStorage.getItem("estudafacilDados")) || {};
+    } catch {
+      return {};
+    }
+  };
+
+  let dados = {
+    contas: 0,
+    materias: [],
+    nome: "",
+    ...lerDados()
+  };
+
+  function salvarDados() {
+    try {
+      localStorage.setItem("estudafacilDados", JSON.stringify(dados));
+    } catch {
+      // O site continua funcionando se o navegador bloquear o armazenamento.
+    }
   }
-};
 
-function mostrarPagina(id) {
-  const destino = document.getElementById(id);
-  if (!destino) return;
+  // NAVEGAÇÃO ENTRE PÁGINAS
+  function abrirPagina(id) {
+    const pagina = document.getElementById(id);
+    if (!pagina || !pagina.classList.contains("pagina")) return;
 
-  document.querySelectorAll(".pagina").forEach((pagina) => {
-    pagina.classList.remove("ativa");
+    $$(".pagina").forEach((p) => p.classList.add("escondida"));
+    pagina.classList.remove("escondida");
+
+    $$(".nav-btn").forEach((botao) => {
+      botao.classList.toggle("ativo", botao.dataset.page === id);
+    });
+
+    $("#menu")?.classList.remove("aberto");
+    atualizarProgresso();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  $$(".nav-btn").forEach((botao) => {
+    botao.addEventListener("click", () => abrirPagina(botao.dataset.page));
   });
 
-  destino.classList.add("ativa");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-document.querySelectorAll("[data-page]").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    mostrarPagina(botao.dataset.page);
+  $$("[data-go]").forEach((botao) => {
+    botao.addEventListener("click", () => abrirPagina(botao.dataset.go));
   });
-});
 
-$("#sairBtn").addEventListener("click", () => {
-  mostrarPagina("inicio");
-});
+  $("#menuBtn").addEventListener("click", () => {
+    $("#menu").classList.toggle("aberto");
+  });
 
-function criarListaMaterias() {
-  const lista = $("#listaMaterias");
+  // MATÉRIAS E EXPLICAÇÕES BÁSICAS
+  const materias = [
+    {
+      nome: "Matemática",
+      emoji: "➗",
+      texto: "Estuda números, operações, medidas, formas e resolução de problemas. Exemplo: 5 + 5 = 10."
+    },
+    {
+      nome: "Português",
+      emoji: "📖",
+      texto: "Estuda leitura, interpretação, escrita, gramática e ortografia. Uma boa dica é ler o texto inteiro antes de responder às perguntas."
+    },
+    {
+      nome: "Ciências",
+      emoji: "🔬",
+      texto: "Investiga a natureza, os seres vivos, a matéria, a energia e o ambiente."
+    },
+    {
+      nome: "Geografia",
+      emoji: "🌎",
+      texto: "Estuda os lugares, paisagens, população, clima e a relação entre as pessoas e o espaço."
+    },
+    {
+      nome: "História",
+      emoji: "🏛️",
+      texto: "Estuda acontecimentos e sociedades do passado para compreender como o mundo mudou ao longo do tempo."
+    },
+    {
+      nome: "Inglês",
+      emoji: "🇬🇧",
+      texto: "Aprende vocabulário, leitura, escrita e conversação. Exemplo: “Hello” significa “Olá”."
+    },
+    {
+      nome: "Física",
+      emoji: "⚡",
+      texto: "Estuda fenômenos como movimento, forças, energia, luz, calor e eletricidade."
+    },
+    {
+      nome: "Química",
+      emoji: "🧪",
+      texto: "Estuda a matéria, suas propriedades, sua composição e as transformações que ela sofre."
+    },
+    {
+      nome: "Biologia",
+      emoji: "🧬",
+      texto: "Estuda os seres vivos, suas células, seu funcionamento, sua evolução e suas relações com o ambiente."
+    },
+    {
+      nome: "Filosofia",
+      emoji: "💭",
+      texto: "Investiga perguntas sobre conhecimento, ética, justiça, existência e como pensamos."
+    },
+    {
+      nome: "Sociologia",
+      emoji: "👥",
+      texto: "Estuda a sociedade, os grupos sociais, a cultura, as instituições e as relações entre as pessoas."
+    }
+  ];
 
-  Object.keys(materias).forEach((nome) => {
+  const listaMaterias = $("#listaMaterias");
+  const detalheMateria = $("#detalheMateria");
+
+  materias.forEach((materia) => {
     const botao = document.createElement("button");
-    botao.textContent = nome;
-    botao.addEventListener("click", () => abrirMateria(nome));
-    lista.appendChild(botao);
-  });
-}
+    botao.type = "button";
+    botao.className = "materia-btn";
+    botao.textContent = `${materia.emoji} ${materia.nome}`;
 
-function abrirMateria(nome) {
-  const materia = materias[nome];
-  if (!materia) return;
+    botao.addEventListener("click", () => {
+      detalheMateria.classList.remove("escondida");
+      detalheMateria.textContent = `${materia.emoji} ${materia.nome}\n\n${materia.texto}`;
 
-  $("#tituloMateria").textContent = nome;
-  $("#descricaoMateria").textContent = materia.descricao;
-  $("#pergunta").value = "";
-  $("#respostaDuvida").textContent = "";
-  $("#areaMateria").hidden = false;
-  $("#areaMateria").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
+      $$(".materia-btn").forEach((b) => b.classList.remove("selecionada"));
+      botao.classList.add("selecionada");
 
-$("#voltarMaterias").addEventListener("click", () => {
-  $("#areaMateria").hidden = true;
-  $("#respostaDuvida").textContent = "";
-  $("#listaMaterias").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-});
-
-/*
-  Sistema básico de explicações por palavras-chave.
-  Não é uma IA e não consegue responder a todas as perguntas.
-*/
-$("#formDuvida").addEventListener("submit", (evento) => {
-  evento.preventDefault();
-
-  const pergunta = $("#pergunta").value.trim().toLocaleLowerCase("pt-BR");
-  const materia = $("#tituloMateria").textContent;
-  let resposta = "";
-
-  if (!pergunta) {
-    resposta = "Escreva sua dúvida primeiro.";
-  } else if (
-    pergunta.includes("fração") ||
-    pergunta.includes("fracao")
-  ) {
-    resposta = "Uma fração representa partes de um todo. Em 1/2, por exemplo, o 1 indica uma parte e o 2 indica duas partes iguais no total.";
-  } else if (
-    pergunta.includes("porcentagem") ||
-    pergunta.includes("por cento")
-  ) {
-    resposta = "Porcentagem é uma parte de cada 100. Por exemplo, 50% representa 50 de cada 100, ou metade.";
-  } else if (
-    pergunta.includes("substantivo")
-  ) {
-    resposta = "Substantivo é a palavra que nomeia pessoas, lugares, objetos, sentimentos ou ideias. Exemplos: casa, Brasil e alegria.";
-  } else if (
-    pergunta.includes("verbo")
-  ) {
-    resposta = "Verbo é uma palavra que pode expressar ação, estado ou fenômeno da natureza. Exemplos: estudar, estar e chover.";
-  } else if (
-    pergunta.includes("fotossíntese") ||
-    pergunta.includes("fotossintese")
-  ) {
-    resposta = "Fotossíntese é o processo pelo qual plantas, algas e alguns organismos usam energia da luz para produzir matéria orgânica a partir de água e dióxido de carbono.";
-  } else if (
-    pergunta.includes("capital do brasil")
-  ) {
-    resposta = "A capital do Brasil é Brasília, localizada no Distrito Federal.";
-  } else if (
-    pergunta.includes("segunda guerra")
-  ) {
-    resposta = "A Segunda Guerra Mundial ocorreu de 1939 a 1945 e envolveu países de diferentes partes do mundo.";
-  } else if (
-    pergunta.includes("força") ||
-    pergunta.includes("forca")
-  ) {
-    resposta = "Em Física, força é uma interação capaz de alterar o movimento de um objeto ou deformá-lo.";
-  } else if (
-    pergunta.includes("átomo") ||
-    pergunta.includes("atomo")
-  ) {
-    resposta = "Um átomo é formado por um núcleo, que contém prótons e nêutrons, e elétrons ao redor dele.";
-  } else if (
-    pergunta.includes("célula") ||
-    pergunta.includes("celula")
-  ) {
-    resposta = "A célula é a unidade básica estrutural e funcional dos seres vivos.";
-  } else if (
-    pergunta.includes("inglês") ||
-    pergunta.includes("ingles") ||
-    pergunta.includes("hello")
-  ) {
-    resposta = 'Em inglês, "hello" significa "olá". Para aprender mais, experimente perguntar sobre uma palavra específica.';
-  } else {
-    resposta = "Ainda não tenho uma explicação pronta para essa pergunta. Tente escrever de outra forma ou procure o assunto no material da matéria: " + materia + ".";
-  }
-
-  $("#respostaDuvida").textContent = resposta;
-});
-
-/* Calculadora com operações básicas e parênteses. */
-
-function calcularExpressao(expressao) {
-  const tokens = expressao.match(
-    /\d+(?:\.\d+)?|[()+\-*/]/g
-  );
-
-  if (!tokens || tokens.join("") !== expressao.replace(/\s/g, "")) {
-    throw new Error("Expressão inválida");
-  }
-
-  let posicao = 0;
-
-  function fator() {
-    const token = tokens[posicao];
-
-    if (token === "+") {
-      posicao++;
-      return fator();
-    }
-
-    if (token === "-") {
-      posicao++;
-      return -fator();
-    }
-
-    if (token === "(") {
-      posicao++;
-      const valor = expressaoSoma();
-
-      if (tokens[posicao] !== ")") {
-        throw new Error("Falta fechar parênteses");
+      if (!dados.materias.includes(materia.nome)) {
+        dados.materias.push(materia.nome);
+        salvarDados();
       }
 
-      posicao++;
-      return valor;
-    }
+      atualizarProgresso();
+    });
 
-    if (token && /^\d+(?:\.\d+)?$/.test(token)) {
-      posicao++;
-      return Number(token);
-    }
-
-    throw new Error("Número inválido");
-  }
-
-  function expressaoMultiplicacao() {
-    let valor = fator();
-
-    while (
-      tokens[posicao] === "*" ||
-      tokens[posicao] === "/"
-    ) {
-      const operador = tokens[posicao++];
-      const proximo = fator();
-
-      if (operador === "/" && proximo === 0) {
-        throw new Error("Não é possível dividir por zero");
-      }
-
-      valor = operador === "*" ? valor * proximo : valor / proximo;
-    }
-
-    return valor;
-  }
-
-  function expressaoSoma() {
-    let valor = expressaoMultiplicacao();
-
-    while (
-      tokens[posicao] === "+" ||
-      tokens[posicao] === "-"
-    ) {
-      const operador = tokens[posicao++];
-      const proximo = expressaoMultiplicacao();
-
-      valor = operador === "+" ? valor + proximo : valor - proximo;
-    }
-
-    return valor;
-  }
-
-  const resultado = expressaoSoma();
-
-  if (posicao !== tokens.length || !Number.isFinite(resultado)) {
-    throw new Error("Expressão inválida");
-  }
-
-  return resultado;
-}
-
-const visor = $("#visor");
-
-document.querySelectorAll("[data-value]").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    visor.value += botao.dataset.value;
-    $("#resultadoConta").textContent = "";
+    listaMaterias.appendChild(botao);
   });
-});
 
-$("#limparBtn").addEventListener("click", () => {
-  visor.value = "";
-  $("#resultadoConta").textContent = "";
-});
+  // PESQUISA DE DÚVIDAS CADASTRADAS
+  const respostas = [
+    {
+      termos: ["fotossintese", "fotossíntese"],
+      resposta: "Fotossíntese é o processo pelo qual plantas, algas e alguns outros organismos usam a energia da luz para produzir açúcares a partir de água e gás carbônico. Nesse processo, geralmente há liberação de oxigênio."
+    },
+    {
+      termos: ["gravidade"],
+      resposta: "Gravidade é a interação que atrai corpos que possuem massa. Na Terra, ela nos mantém no chão e faz objetos caírem quando são soltos."
+    },
+    {
+      termos: ["celula", "célula", "celulas", "células"],
+      resposta: "A célula é a unidade básica dos seres vivos. Alguns organismos possuem uma única célula; outros, como os seres humanos, possuem muitas."
+    },
+    {
+      termos: ["historia", "história"],
+      resposta: "História é o estudo das sociedades e das ações humanas ao longo do tempo, com base em fontes como documentos, objetos, imagens e relatos."
+    },
+    {
+      termos: ["substantivo"],
+      resposta: "Substantivo é a palavra usada para nomear pessoas, animais, objetos, lugares, sentimentos e ideias. Exemplos: escola, cachorro, Brasil e alegria."
+    },
+    {
+      termos: ["verbo"],
+      resposta: "Verbo é a palavra que pode expressar ação, estado ou fenômeno da natureza. Exemplos: estudar, ser e chover."
+    },
+    {
+      termos: ["multiplicacao", "multiplicação", "multiplicar"],
+      resposta: "Multiplicação é uma forma de somar parcelas iguais. Exemplo: 3 × 4 = 12, pois 4 + 4 + 4 = 12."
+    },
+    {
+      termos: ["divisao", "divisão", "dividir"],
+      resposta: "Divisão é repartir uma quantidade em partes iguais ou descobrir quantas vezes uma quantidade cabe em outra. Exemplo: 12 ÷ 3 = 4."
+    },
+    {
+      termos: ["revolucao francesa", "revolução francesa"],
+      resposta: "A Revolução Francesa começou em 1789. Foi um período de profundas mudanças políticas e sociais na França, ligado a ideias de liberdade, igualdade e cidadania."
+    },
+    {
+      termos: ["ingles", "inglês", "hello"],
+      resposta: "Em inglês, “hello” significa “olá”. Outras palavras úteis: “good morning” = “bom dia”; “thank you” = “obrigado(a)”."
+    },
+    {
+      termos: ["planeta", "sistema solar"],
+      resposta: "O Sistema Solar é formado pelo Sol e pelos corpos que orbitam ao seu redor, incluindo oito planetas, luas, asteroides e cometas."
+    },
+    {
+      termos: ["agua", "água"],
+      resposta: "A água pura é formada por moléculas H₂O: cada molécula tem dois átomos de hidrogênio e um de oxigênio."
+    }
+  ];
 
-$("#apagarBtn").addEventListener("click", () => {
-  visor.value = visor.value.slice(0, -1);
-  $("#resultadoConta").textContent = "";
-});
+  function normalizar(texto) {
+    return texto
+      .toLocaleLowerCase("pt-BR")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
 
-function executarCalculo() {
-  try {
-    const expressao = visor.value.trim();
+  function pesquisarDuvida() {
+    const pergunta = $("#buscaMateria").value.trim();
+    const saida = $("#respostaDuvida");
 
-    if (!expressao) {
-      $("#resultadoConta").textContent = "Digite uma conta primeiro.";
+    if (!pergunta) {
+      saida.textContent = "Digite uma dúvida antes de pesquisar.";
       return;
     }
 
-    const resultado = calcularExpressao(expressao);
-    $("#resultadoConta").textContent = "Resultado: " + resultado;
-  } catch (erro) {
-    $("#resultadoConta").textContent =
-      erro.message === "Não é possível dividir por zero"
-        ? erro.message
-        : "Conta inválida. Confira os números e os sinais.";
-  }
-}
-
-$("#calcularBtn").addEventListener("click", executarCalculo);
-
-visor.addEventListener("keydown", (evento) => {
-  if (evento.key === "Enter") {
-    executarCalculo();
-  }
-});
-
-/* Progresso guardado neste navegador. */
-
-function lerSessoes() {
-  try {
-    return Math.max(
-      0,
-      Number.parseInt(localStorage.getItem("estudaFacilSessoes"), 10) || 0
+    const texto = normalizar(pergunta);
+    const resposta = respostas.find((item) =>
+      item.termos.some((termo) => texto.includes(normalizar(termo)))
     );
-  } catch {
-    return 0;
-  }
-}
 
-let sessoes = lerSessoes();
-
-function atualizarProgresso() {
-  $("#totalProgresso").textContent = "Sessões concluídas: " + sessoes;
-
-  try {
-    localStorage.setItem("estudaFacilSessoes", String(sessoes));
-  } catch {
-    // O site continua funcionando mesmo se o navegador bloquear o armazenamento.
-  }
-}
-
-$("#concluirSessao").addEventListener("click", () => {
-  sessoes++;
-  atualizarProgresso();
-});
-
-$("#desfazerSessao").addEventListener("click", () => {
-  sessoes = Math.max(0, sessoes - 1);
-  atualizarProgresso();
-});
-
-/* Perfil salvo neste navegador. */
-
-$("#formPerfil").addEventListener("submit", (evento) => {
-  evento.preventDefault();
-
-  const nome = $("#nome").value.trim();
-
-  if (!nome) {
-    $("#mensagemPerfil").textContent = "Digite seu nome primeiro.";
-    return;
-  }
-
-  $("#mensagemPerfil").textContent = "Nome salvo! Olá, " + nome + "! 💜";
-  $("#boasVindas").textContent = "Olá, " + nome + "! 👋";
-
-  try {
-    localStorage.setItem("estudaFacilNome", nome);
-  } catch {
-    // O perfil funciona durante esta visita, mesmo sem armazenamento.
-  }
-});
-
-function iniciarSite() {
-  criarListaMaterias();
-  atualizarProgresso();
-
-  try {
-    const nomeSalvo = localStorage.getItem("estudaFacilNome");
-
-    if (nomeSalvo) {
-      $("#nome").value = nomeSalvo;
-      $("#boasVindas").textContent = "Olá, " + nomeSalvo + "! 👋";
-      $("#mensagemPerfil").textContent = "Seu nome está salvo.";
+    if (resposta) {
+      saida.textContent = resposta.resposta;
+    } else {
+      saida.textContent =
+        "Ainda não tenho uma explicação cadastrada para essa pergunta. Tente pesquisar por palavras como fotossíntese, gravidade, célula, substantivo, verbo ou Revolução Francesa.";
     }
-  } catch {
-    // O site pode ser usado mesmo sem armazenamento local.
   }
 
-  mostrarPagina("inicio");
-}
+  $("#buscarDuvida").addEventListener("click", pesquisarDuvida);
+  $("#buscaMateria").addEventListener("keydown", (evento) => {
+    if (evento.key === "Enter") pesquisarDuvida();
+  });
 
-iniciarSite();
+  // CALCULADORA: interpreta apenas operações matemáticas permitidas.
+  const visor = $("#visor");
+  const resultadoConta = $("#resultadoConta");
+
+  function calcularExpressao(expressao) {
+    let texto = expressao
+      .replace(/[×xX]/g, "*")
+      .replace(/÷/g, "/")
+      .replace(/[−–]/g, "-")
+      .replace(/,/g, ".")
+      .replace(/\s+/g, "");
+
+    if (!texto) throw new Error("Digite uma conta.");
+    if (!/^[0-9+\-*/().]+$/.test(texto)) {
+      throw new Error("Use apenas números e operações matemáticas.");
+    }
+
+    const tokens = texto.match(/(?:\d+(?:\.\d*)?|\.\d+)|[()+\-*/]/g);
+    if (!tokens || tokens.join("") !== texto) {
+      throw new Error("Confira os números e os sinais da conta.");
+    }
+
+    let posicao = 0;
+
+    function expressao() {
+      let valor = termo();
+
+      while (tokens[posicao] === "+" || tokens[posicao] === "-") {
+        const operador = tokens[posicao++];
+        const proximo = termo();
+        valor = operador === "+" ? valor + proximo : valor - proximo;
+      }
+
+      return valor;
+    }
+
+    function termo() {
+      let valor = fator();
+
+      while (tokens[posicao] === "*" || tokens[posicao] === "/") {
+        const operador = tokens[posicao++];
+        const proximo = fator();
+
+        if (operador === "/" && proximo === 0) {
+          throw new Error("Não é possível dividir por zero.");
+        }
+
+        valor = operador === "*" ? valor * proximo : valor / proximo;
+      }
+
+      return valor;
+    }
+
+    function fator() {
+      const token = tokens[posicao];
+
+      if (token === "+") {
+        posicao++;
+        return fator();
+      }
+
+      if (token === "-") {
+        posicao++;
+        return -fator();
+      }
+
+      if (token === "(") {
+        posicao++;
+        const valor = expressao();
+
+        if (tokens[posicao] !== ")") {
+          throw new Error("Confira os parênteses.");
+        }
+
+        posicao++;
+        return valor;
+      }
+
+      if (token !== undefined && /^\d*\.?\d+$/.test(token)) {
+        posicao++;
+        return Number(token);
+      }
+
+      throw new Error("Confira a conta digitada.");
+    }
+
+    const valor = expressao();
+
+    if (posicao !== tokens.length || !Number.isFinite(valor)) {
+      throw new Error("Não foi possível calcular essa conta.");
+    }
+
+    return Object.is(valor, -0)
+      ? "0"
+      : Number(valor.toPrecision(12)).toString();
+  }
+
+  function executarCalculo() {
+    try {
+      const resultado = calcularExpressao(visor.value);
+      resultadoConta.textContent = `Resultado: ${resultado}`;
+      dados.contas = (Number(dados.contas) || 0) + 1;
+      salvarDados();
+      atualizarProgresso();
+    } catch (erro) {
+      resultadoConta.textContent = erro.message || "Confira a conta digitada.";
+    }
+  }
+
+  $$(".teclas button").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const tecla = botao.dataset.key;
+      const acao = botao.dataset.action;
+
+      if (tecla !== undefined) {
+        visor.value += tecla;
+        visor.focus();
+      } else if (acao === "limpar") {
+        visor.value = "";
+        resultadoConta.textContent = "O resultado aparecerá aqui.";
+        visor.focus();
+      } else if (acao === "apagar") {
+        visor.value = visor.value.slice(0, -1);
+        visor.focus();
+      } else if (acao === "calcular") {
+        executarCalculo();
+      }
+    });
+  });
+
+  visor.addEventListener("keydown", (evento) => {
+    if (evento.key === "Enter" || evento.key === "=") {
+      evento.preventDefault();
+      executarCalculo();
+    }
+  });
+
+  // DICAS DE ESTUDO
+  const dicas = [
+    "Estude em blocos curtos e faça pequenas pausas entre eles.",
+    "Tente explicar com suas próprias palavras aquilo que acabou de aprender.",
+    "Resolva exercícios e confira onde errou para entender melhor o assunto.",
+    "Afaste notificações e outras distrações durante o estudo.",
+    "Anote as dúvidas para pesquisar ou perguntar depois.",
+    "Revise o conteúdo em outros dias, não apenas na véspera da prova.",
+    "Divida tarefas grandes em etapas pequenas e possíveis de concluir."
+  ];
+
+  let dicaAtual = 0;
+
+  function mostrarDicas() {
+    const lista = $("#listaDicas");
+    lista.replaceChildren();
+
+    [0, 1, 2].forEach((offset) => {
+      const indice = (dicaAtual + offset) % dicas.length;
+      const card = document.createElement("div");
+      card.className = "dica";
+      card.textContent = `💡 ${dicas[indice]}`;
+      lista.appendChild(card);
+    });
+  }
+
+  $("#novaDica").addEventListener("click", () => {
+    dicaAtual = (dicaAtual + 1) % dicas.length;
+    mostrarDicas();
+  });
+
+  // PROGRESSO
+  function atualizarProgresso() {
+    $("#totalContas").textContent = Number(dados.contas) || 0;
+    $("#totalMaterias").textContent = dados.materias.length;
+  }
+
+  $("#limparProgresso").addEventListener("click", () => {
+    if (confirm("Quer reiniciar seu progresso salvo neste navegador?")) {
+      dados.contas = 0;
+      dados.materias = [];
+      salvarDados();
+      atualizarProgresso();
+    }
+  });
+
+  // PERFIL
+  $("#nomePerfil").value = dados.nome || "";
+
+  $("#salvarPerfil").addEventListener("click", () => {
+    dados.nome = $("#nomePerfil").value.trim();
+    salvarDados();
+    $("#mensagemPerfil").textContent = dados.nome
+      ? `Nome salvo! Olá, ${dados.nome}!`
+      : "Digite um nome antes de salvar.";
+  });
+
+  // INICIALIZAÇÃO
+  mostrarDicas();
+  atualizarProgresso();
+  abrirPagina("inicio");
+});
