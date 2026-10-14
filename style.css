@@ -1,0 +1,299 @@
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --roxo: #6c3de8;
+  --roxo-escuro: #4b24b5;
+  --fundo: #f5f2ff;
+  --texto: #292342;
+  --branco: #ffffff;
+  --borda: #e7e0fa;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  flex-shrink: 0;
+  padding: 24px 16px;
+  background: var(--branco);
+  border-right: 1px solid var(--borda);
+}
+
+.sidebar h1 {
+  margin: 0 0 28px;
+  color: var(--roxo);
+  font-size: 25px;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav,
+.logout {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texto);
+  text-align: left;
+}
+
+.nav:hover,
+.nav.active {
+  background: #eee7ff;
+  color: var(--roxo-escuro);
+  font-weight: bold;
+}
+
+.logout {
+  margin-top: 24px;
+  color: #c0395b;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+}
+
+.page {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page.active {
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.3;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.hero {
+  padding: 32px;
+  margin-bottom: 24px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #6c3de8, #9875f5);
+  color: white;
+  box-shadow: 0 10px 28px #6c3de822;
+}
+
+.hero h2 {
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+.hero p {
+  line-height: 1.6;
+}
+
+.cards,
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.card,
+.subject-card,
+.panel {
+  padding: 22px;
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  background: var(--branco);
+  box-shadow: 0 5px 18px #37216b0a;
+}
+
+.card h3,
+.subject-card h3,
+.panel h3 {
+  margin-top: 0;
+}
+
+.subject-card {
+  text-align: left;
+  color: var(--texto);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px #6c3de822;
+}
+
+button:not(.nav):not(.logout):not(.subject-card) {
+  border-radius: 10px;
+}
+
+.panel {
+  margin: 18px 0;
+}
+
+input,
+select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 11px 12px;
+  border: 1px solid #d8cdef;
+  border-radius: 10px;
+  background: white;
+  color: var(--texto);
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: bold;
+}
+
+button:not(.nav):not(.logout):not(.subject-card) {
+  padding: 11px 16px;
+  border: 0;
+  background: var(--roxo);
+  color: white;
+}
+
+button:not(.nav):not(.logout):not(.subject-card):hover {
+  background: var(--roxo-escuro);
+}
+
+#studyMessage,
+#answer,
+#profileMessage {
+  margin-top: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.calculator {
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 8px 25px #37216b14;
+}
+
+#display {
+  width: 100%;
+  height: 64px;
+  margin-bottom: 14px;
+  font-size: 25px;
+  text-align: right;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+.calc-grid button {
+  min-height: 52px;
+  font-size: 18px;
+}
+
+#progressBar {
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e8e0f7;
+}
+
+#progressBar > div {
+  height: 100%;
+  border-radius: 20px;
+  background: var(--roxo);
+  transition: width 0.3s;
+}
+
+small {
+  color: #6d6680;
+}
+
+@media (max-width: 760px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 18px 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .sidebar h1 {
+    margin-bottom: 15px;
+  }
+
+  .sidebar nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav,
+  .logout {
+    padding: 11px 9px;
+    font-size: 14px;
+  }
+
+  .logout {
+    margin-top: 10px;
+  }
+
+  .content {
+    padding: 18px 12px;
+  }
+
+  .hero {
+    padding: 23px 18px;
+  }
+
+  .hero h2 {
+    font-size: 25px;
+  }
+
+  .cards,
+  .subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator {
+    max-width: 100%;
+  }
+}
