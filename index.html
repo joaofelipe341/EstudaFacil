@@ -1,141 +1,268 @@
-```html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EstudaFácil</title>
+  <meta name="theme-color" content="#6545c5">
+  <meta name="description" content="EstudaFácil: conteúdos, matérias e ferramentas para estudar.">
+  <title>EstudaFácil — Aprender pode ser mais simples</title>
   <link rel="stylesheet" href="estilo.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="topbar">
-    <button id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
-    <h1>📚 EstudaFácil</h1>
-  </header>
-
   <div class="app">
-    <aside id="sidebar" class="sidebar">
-      <h2>EstudaFácil</h2>
-      <nav>
-        <button class="nav-btn active" data-page="inicio">🏠 Início</button>
-        <button class="nav-btn" data-page="materias">📚 Matérias</button>
-        <button class="nav-btn" data-page="calculadora">🧮 Calculadora</button>
-        <button class="nav-btn" data-page="dicas">💡 Dicas</button>
-        <button class="nav-btn" data-page="progresso">📊 Progresso</button>
-        <button class="nav-btn" data-page="perfil">👤 Perfil</button>
+
+    <header class="topbar">
+      <button id="menuToggle" class="menu-toggle" aria-label="Abrir menu">☰</button>
+      <a href="#inicio" class="brand">📚 EstudaFácil</a>
+      <button class="home-button" data-page="inicio">Início</button>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">📚 EstudaFácil</div>
+      <p class="sidebar-caption">SEU ESPAÇO DE ESTUDOS</p>
+
+      <nav class="navigation" aria-label="Menu principal">
+        <button class="nav-button active" data-page="inicio">🏠 Início</button>
+        <button class="nav-button" data-page="materias">📚 Matérias</button>
+        <button class="nav-button" data-page="calculadora">🧮 Calculadora</button>
+        <button class="nav-button" data-page="duvidas">💡 Tirar dúvidas</button>
+        <button class="nav-button" data-page="dicas">✨ Dicas de estudo</button>
+        <button class="nav-button" data-page="progresso">📊 Progresso</button>
+        <button class="nav-button" data-page="perfil">👤 Perfil</button>
       </nav>
-      <button id="logoutBtn" class="logout" type="button">↩ Voltar ao início</button>
+
+      <button id="logoutBtn" class="logout-button">🚪 Voltar ao início</button>
     </aside>
 
-    <main class="main">
-      <p id="notice" class="notice" hidden></p>
+    <main class="main-content">
 
-      <section id="page-inicio" class="page active">
+      <!-- INÍCIO -->
+      <section class="page active" id="inicio">
         <div class="hero">
-          <p>SEU ESPAÇO DE APRENDIZAGEM</p>
-          <h2 id="welcomeTitle">Olá! 👋</h2>
-          <p>Bem-vindo ao EstudaFácil.</p>
-          <p>Aprender pode ser mais simples.</p>
-          <button data-page="materias" type="button">Começar a estudar →</button>
+          <span class="eyebrow">SEU FUTURO COMEÇA AQUI</span>
+          <h1>Olá! 👋</h1>
+          <h2>Bem-vindo ao EstudaFácil.</h2>
+          <p>Aprender pode ser mais simples. Escolha uma matéria e comece a estudar!</p>
+          <button class="primary-button" data-page="materias">Começar a estudar →</button>
         </div>
-        <div class="panel">
-          <h2>📈 Seu progresso</h2>
-          <p id="homeProgress">Escolha uma matéria para começar!</p>
+
+        <h2 class="section-title">O que você quer fazer?</h2>
+        <div class="feature-grid">
+          <button class="feature-card" data-page="materias">
+            <span class="feature-icon">📚</span>
+            <strong>Estudar matérias</strong>
+            <span>Explore 11 matérias escolares.</span>
+          </button>
+          <button class="feature-card" data-page="calculadora">
+            <span class="feature-icon">🧮</span>
+            <strong>Usar calculadora</strong>
+            <span>Resolva contas básicas.</span>
+          </button>
+          <button class="feature-card" data-page="duvidas">
+            <span class="feature-icon">💡</span>
+            <strong>Tirar dúvidas</strong>
+            <span>Consulte perguntas e respostas.</span>
+          </button>
+          <button class="feature-card" data-page="progresso">
+            <span class="feature-icon">📊</span>
+            <strong>Meu progresso</strong>
+            <span>Acompanhe seus estudos.</span>
+          </button>
         </div>
-        <div class="panel">
-          <h2>📚 O que você quer estudar?</h2>
-          <button data-page="materias" type="button">Ver as 11 matérias</button>
+
+        <div class="welcome-card">
+          <h2>🌟 Uma etapa de cada vez</h2>
+          <p>Escolha um conteúdo, estude no seu ritmo e marque o que já concluiu.</p>
         </div>
       </section>
 
-      <section id="page-materias" class="page">
-        <h2>📚 Matérias</h2>
-        <p>Escolha uma matéria para estudar.</p>
-        <input id="subjectSearch" type="search" placeholder="Pesquisar matéria...">
-        <div id="subjectGrid" class="subject-grid"></div>
-        <p id="noSubjects" hidden>Nenhuma matéria encontrada.</p>
-      </section>
-
-      <section id="page-materia" class="page">
-        <button data-page="materias" type="button">← Todas as matérias</button>
-        <h2 id="subjectTitle">Matéria</h2>
-        <p id="subjectDescription"></p>
-        <div id="subjectContent"></div>
-
-        <div class="panel">
-          <h3>💡 Tirar dúvidas</h3>
-          <p>Digite uma palavra ou assunto presente no conteúdo desta matéria.</p>
-          <form id="doubtForm">
-            <input id="doubtInput" type="text" placeholder="Digite sua dúvida..." required>
-            <button type="submit">Pesquisar resposta</button>
-          </form>
-          <div id="doubtAnswer" class="answer" hidden></div>
+      <!-- MATÉRIAS -->
+      <section class="page" id="materias">
+        <div class="page-heading">
+          <span class="eyebrow">APRENDA NO SEU RITMO</span>
+          <h1>📚 Matérias</h1>
+          <p>Escolha uma matéria para acessar seus conteúdos.</p>
         </div>
-        <button id="finishSubject" type="button">✓ Marcar como estudada</button>
+
+        <label class="field-label" for="subjectSearch">Pesquisar matéria</label>
+        <input id="subjectSearch" class="text-input" type="search"
+          placeholder="Ex.: Matemática, História..." autocomplete="off">
+
+        <div id="subjectsGrid" class="subjects-grid"></div>
+
+        <div id="subjectContent" class="subject-content" hidden>
+          <button id="backToSubjects" class="secondary-button">← Todas as matérias</button>
+          <div id="subjectDetails"></div>
+        </div>
       </section>
 
-      <section id="page-calculadora" class="page">
-        <h2>🧮 Calculadora</h2>
+      <!-- CALCULADORA -->
+      <section class="page" id="calculadora">
+        <div class="page-heading">
+          <span class="eyebrow">FERRAMENTA DE ESTUDO</span>
+          <h1>🧮 Calculadora</h1>
+          <p>Faça suas operações matemáticas básicas.</p>
+        </div>
+
         <div class="calculator">
-          <input id="calcDisplay" type="text" value="0" readonly aria-label="Visor da calculadora">
-          <div class="calc-grid">
-            <button data-calc="clear" type="button">C</button>
-            <button data-calc="backspace" type="button">⌫</button>
-            <button data-value="(" type="button">(</button>
-            <button data-value=")" type="button">)</button>
-            <button data-value="7" type="button">7</button>
-            <button data-value="8" type="button">8</button>
-            <button data-value="9" type="button">9</button>
-            <button data-value="/" type="button">÷</button>
-            <button data-value="4" type="button">4</button>
-            <button data-value="5" type="button">5</button>
-            <button data-value="6" type="button">6</button>
-            <button data-value="*" type="button">×</button>
-            <button data-value="1" type="button">1</button>
-            <button data-value="2" type="button">2</button>
-            <button data-value="3" type="button">3</button>
-            <button data-value="-" type="button">−</button>
-            <button data-value="0" type="button">0</button>
-            <button data-value="." type="button">.</button>
-            <button data-calc="equals" type="button">=</button>
-            <button data-value="+" type="button">+</button>
+          <label class="field-label" for="calcDisplay">Sua conta</label>
+          <input id="calcDisplay" class="calculator-display" type="text"
+            inputmode="decimal" placeholder="Ex.: 5+5"
+            autocomplete="off" aria-label="Conta e resultado">
+
+          <div class="calculator-buttons">
+            <button data-calc="clear" class="calc-clear">C</button>
+            <button data-calc="(">(</button>
+            <button data-calc=")">)</button>
+            <button data-calc="delete">⌫</button>
+
+            <button data-calc="7">7</button>
+            <button data-calc="8">8</button>
+            <button data-calc="9">9</button>
+            <button data-calc="/">÷</button>
+
+            <button data-calc="4">4</button>
+            <button data-calc="5">5</button>
+            <button data-calc="6">6</button>
+            <button data-calc="*">×</button>
+
+            <button data-calc="1">1</button>
+            <button data-calc="2">2</button>
+            <button data-calc="3">3</button>
+            <button data-calc="-">−</button>
+
+            <button data-calc="0">0</button>
+            <button data-calc=".">.</button>
+            <button data-calc="equals" class="calc-equals">=</button>
+            <button data-calc="+">+</button>
           </div>
-          <p id="calcMessage" aria-live="polite">Digite uma conta.</p>
+          <p id="calcMessage" class="message" aria-live="polite"></p>
         </div>
       </section>
 
-      <section id="page-dicas" class="page">
-        <h2>💡 Dicas de estudo</h2>
-        <article class="topic"><h3>1. Organize seu tempo</h3><p>Separe pequenos períodos para estudar e faça pausas.</p></article>
-        <article class="topic"><h3>2. Faça anotações</h3><p>Escreva as ideias principais com suas próprias palavras.</p></article>
-        <article class="topic"><h3>3. Pratique</h3><p>Resolva exercícios e revise os erros para aprender.</p></article>
-        <article class="topic"><h3>4. Tire suas dúvidas</h3><p>Anote as perguntas e procure respostas em materiais confiáveis.</p></article>
-      </section>
-
-      <section id="page-progresso" class="page">
-        <h2>📊 Meu progresso</h2>
-        <div class="panel">
-          <p id="progressCount">0 de 11 matérias</p>
-          <h3 id="progressPercent">0%</h3>
-          <div class="progress-track"><div id="progressBar"></div></div>
-          <p id="progressMessage">Comece estudando qualquer matéria.</p>
+      <!-- DÚVIDAS -->
+      <section class="page" id="duvidas">
+        <div class="page-heading">
+          <span class="eyebrow">PERGUNTE E APRENDA</span>
+          <h1>💡 Tirar dúvidas</h1>
+          <p>Pesquise uma pergunta ou escolha um assunto para consultar.</p>
         </div>
-        <div id="progressList"></div>
-        <button id="resetProgress" type="button">Zerar progresso</button>
+
+        <form id="doubtForm" class="content-card">
+          <label class="field-label" for="doubtSubject">Matéria</label>
+          <select id="doubtSubject" class="text-input">
+            <option value="todas">Todas as matérias</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>Ciências</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Inglês</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Filosofia</option>
+            <option>Sociologia</option>
+          </select>
+
+          <label class="field-label" for="doubtInput">Sua pergunta</label>
+          <textarea id="doubtInput" class="text-input" rows="4"
+            placeholder="Ex.: Como calcular 20% de 100?" required></textarea>
+
+          <button class="primary-button" type="submit">Pesquisar resposta</button>
+          <p class="helper-text">Nesta versão, as respostas são predefinidas. Nem toda pergunta terá uma resposta cadastrada.</p>
+        </form>
+
+        <div id="doubtAnswer" class="answer-card" aria-live="polite" hidden></div>
+        <div id="suggestedQuestions" class="suggested-questions"></div>
       </section>
 
-      <section id="page-perfil" class="page">
-        <h2>👤 Meu perfil</h2>
-        <form id="profileForm" class="panel">
-          <label for="studentName">Como você quer ser chamado?</label>
-          <input id="studentName" type="text" maxlength="50" placeholder="Seu nome">
-          <button type="submit">Salvar perfil</button>
-          <p id="profileMessage" aria-live="polite"></p>
+      <!-- DICAS -->
+      <section class="page" id="dicas">
+        <div class="page-heading">
+          <span class="eyebrow">ESTUDE MELHOR</span>
+          <h1>✨ Dicas de estudo</h1>
+          <p>Pequenas atitudes que podem ajudar na aprendizagem.</p>
+        </div>
+
+        <div class="tips-grid">
+          <article class="content-card">
+            <span class="feature-icon">⏱️</span>
+            <h2>Organize seu tempo</h2>
+            <p>Divida o estudo em períodos curtos e faça pausas quando precisar.</p>
+          </article>
+          <article class="content-card">
+            <span class="feature-icon">📝</span>
+            <h2>Faça anotações</h2>
+            <p>Escreva as ideias principais com suas próprias palavras.</p>
+          </article>
+          <article class="content-card">
+            <span class="feature-icon">🔁</span>
+            <h2>Revise o conteúdo</h2>
+            <p>Volte aos assuntos estudados e tente explicar o que aprendeu.</p>
+          </article>
+          <article class="content-card">
+            <span class="feature-icon">❓</span>
+            <h2>Pratique com perguntas</h2>
+            <p>Resolva exercícios e confira quais assuntos precisa revisar.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- PROGRESSO -->
+      <section class="page" id="progresso">
+        <div class="page-heading">
+          <span class="eyebrow">CADA PASSO CONTA</span>
+          <h1>📊 Meu progresso</h1>
+          <p>Acompanhe os conteúdos que você concluiu neste dispositivo.</p>
+        </div>
+
+        <div class="progress-overview content-card">
+          <div class="progress-number"><span id="progressCount">0</span> concluídos</div>
+          <div class="progress-track">
+            <div id="progressBar" class="progress-fill"></div>
+          </div>
+          <p id="progressText" aria-live="polite">Você ainda não concluiu nenhum conteúdo.</p>
+        </div>
+
+        <h2 class="section-title">Conteúdos para concluir</h2>
+        <div id="progressList" class="progress-list"></div>
+        <button id="resetProgress" class="secondary-button">Reiniciar progresso</button>
+        <p class="helper-text">O progresso fica salvo neste navegador. Ele não é sincronizado entre dispositivos.</p>
+      </section>
+
+      <!-- PERFIL -->
+      <section class="page" id="perfil">
+        <div class="page-heading">
+          <span class="eyebrow">SEU ESPAÇO PESSOAL</span>
+          <h1>👤 Meu perfil</h1>
+          <p>Personalize as informações exibidas no seu espaço de estudos.</p>
+        </div>
+
+        <form id="profileForm" class="content-card">
+          <label class="field-label" for="profileName">Como quer ser chamado?</label>
+          <input id="profileName" class="text-input" type="text"
+            maxlength="40" placeholder="Seu nome ou apelido">
+
+          <label class="field-label" for="profileGoal">Minha meta de estudo</label>
+          <select id="profileGoal" class="text-input">
+            <option value="15">15 minutos por dia</option>
+            <option value="30">30 minutos por dia</option>
+            <option value="45">45 minutos por dia</option>
+            <option value="60">1 hora por dia</option>
+          </select>
+
+          <button class="primary-button" type="submit">Salvar perfil</button>
+          <p id="profileMessage" class="message" aria-live="polite"></p>
         </form>
       </section>
+
+      <footer class="footer">
+        <p>📚 EstudaFácil — Aprender pode ser mais simples.</p>
+      </footer>
     </main>
   </div>
 </body>
 </html>
-```
